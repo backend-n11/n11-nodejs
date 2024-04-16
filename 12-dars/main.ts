@@ -1,0 +1,3 @@
+interface app {}
+
+new Array();
