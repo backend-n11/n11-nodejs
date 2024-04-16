@@ -1,0 +1,24 @@
+ul {
+  border: 2px solid blue;
+  padding: 10px;
+}
+
+ul.parent {
+  display: flex;
+  border-radius: 5px;
+  justify-content: flex-end;
+}
+
+li {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  list-style-type: none;
+  padding: 5px;
+  margin: 5px;
+  margin-right: 10px;
+  border: 2px solid gold;
+  border-radius: 5px;
+  height: 100px;
+  width: 100px;
+}
