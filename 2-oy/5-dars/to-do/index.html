@@ -73,10 +73,13 @@
   </style>
   <body>
     <h1>ToDo App</h1>
+    
     <form id="addTodoForm">
       <input type="text" id="addInput" placeholder="Add todo item" required />
       <button type="submit">Add ToDo</button>
     </form>
+
+
     <h2>Current Todos</h2>
     <ul id="todoList"></ul>
 
@@ -90,7 +93,8 @@
             "Content-Type": "application/json",
           },
           body: JSON.stringify({ title: value }),
-        }).then(() => window.location.reload());
+        })
+        .then(() => window.location.reload());
       };
 
       window.onload = function () {
