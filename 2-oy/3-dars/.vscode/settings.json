@@ -1,0 +1,5 @@
+{
+    "eslint.nodePath": "",
+    "npm-intellisense.showBuildInLibs": true,
+    "prettier.withNodeModules": true
+}
