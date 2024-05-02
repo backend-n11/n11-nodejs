@@ -26,16 +26,4 @@
 - [24-dars](https://github.com/xam1dullo/n11-nodejs/tree/25-dars)
 - [25-dars](https://github.com/xam1dullo/n11-nodejs/tree/25-dars)
 - [26-dars](https://github.com/xam1dullo/n11-nodejs/tree/26-dars)
-- 27-dars
-- 28-dars
-- 29-dars
-- 30-dars
-- 31-dars
-- 32-dars
-- 33-dars
-- 34-dars
-- 35-dars
-- 36-dars
-- 37-dars
-- 38-dars
-- 39-dars
+- [27-dars](https://github.com/xam1dullo/n11-nodejs/tree/27-dars)
