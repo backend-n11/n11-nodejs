@@ -39,3 +39,9 @@
   2. READ - GET  localhost:3000/blog
   3. UPDATE - PUT localhost:3000/blog/id
   4. DELETE - DELETE localhost:3000/blog/id
+
+
+# Database
+
+1. database/users.json
+2. database/blogs.json
