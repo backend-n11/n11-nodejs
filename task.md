@@ -29,9 +29,9 @@
   ```
 
 # User 
-   1. REGISTER - POST
-   2. LOGIN - POST
-   3. PROFILE - GET, localhost:3000/username | localhost:3000/email |localhost:3000/is 
+   1. REGISTER - POST localhost:3000/register
+   2. LOGIN - POST localhost:3000/login
+   3. PROFILE - GET, localhost:3000/profile/username | localhost:3000/profile/email |localhost:3000/profile/id 
 
 # BLOG
 
