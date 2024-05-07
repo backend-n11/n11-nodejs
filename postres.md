@@ -1,0 +1,15 @@
+# SQL Tutorials
+
+- [programiz](https://www.programiz.com/sql)
+- [w3schools](https://www.w3schools.com/sql/)
+- [w3schools](https://www.w3schools.com/sql/)
+- [sqlzoo](https://sqlzoo.net/wiki/SQL_Tutorial)
+- [sqlbolt](https://sqlbolt.com/)
+- [sqlbolt](https://sqlbolt.com/)
+- [learnsqlonline](https://www.learnsqlonline.org/)
+- [learnsqlonline](https://www.learnsqlonline.org/)
+- [datalemur](https://datalemur.com/sql-tutorial)
+- [kaggle](https://www.kaggle.com/learn/intro-to-sql)
+- [learnsql](https://learnsql.com/blog/ultimate-resources-for-learning-sql/)
+- [rocksql](https://rocksql.com/theory/page_1)
+- [lost-at-sql-therobinlord](https://lost-at-sql.therobinlord.com/)
