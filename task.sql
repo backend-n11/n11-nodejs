@@ -1,0 +1,12 @@
+-- -- users table yarating
+-- 	id,
+-- 	name,
+-- 	email
+--
+-- -- photos table
+-- 	id,
+-- 	name,
+-- 	url,
+-- 	user_id,
+--
+-- 1. INNER JOIN,LEFT JOIN, RIGHT JOIN, FULL OUTER JOIN;
