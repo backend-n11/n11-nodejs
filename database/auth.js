@@ -6,7 +6,7 @@ dotenv.config()
 
 const { Pool } = pg
 
-const connectionString = `postgresql://${process.env.POSTGRES_USER}:${process.env.POSTGRES_PASSWORD}@${process.env.POSTGRES_HOST}:${process.env.POSTGRES_PORT}/${process.env.POSTGRES_DATABASE}`
+const connectionString = `postgresql://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`
 
 class Database {
   constructor() {
@@ -16,6 +16,24 @@ class Database {
     // this.client.query.on('error', (err) => {
     //   console.error(err.stack)
     // })
+  }
+
+
+  async createBlog(title, content, author_id) {
+    try {
+
+      const insertBlog = `
+          INSERT INTO blogs(title, content, author_id) 
+          VALUES ($1, $2, $3) 
+          RETURNING *;
+        `
+      const res = await this.client.query(insertBlog, [title, content, author_id])
+      return res.rows
+
+    } catch (error) {
+      console.error(error)
+      return false
+    }
   }
 
   async create(name, email, password) {
@@ -36,6 +54,8 @@ class Database {
   }
 
   update() { }
+
+
 
   findAll() { }
   async findByEmail(email) {
