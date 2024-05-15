@@ -9,8 +9,8 @@ export const comments = async function(req, res){
         } else {
             let result = await query('INSERT INTO comments(text, created_at, book_id, user_id) values($1, current_timestamp, $2, $3)',[text, book_id, user_id])
             if(result.rowCount>0){
-                let salom = await query('select * from comments inner join books on comments.book_id = books.id;',[])
-                res.status(201).send({status:"comentlar muvaffaqqiyatli yuborildi", data:salom.rows})
+                let salom = await query('select books.title, array_agg(comments.text) as comments from books inner join comments on comments.book_id = books.id group by books.title;',[])
+                res.status(201).json({jsonstatus:"comentlar muvaffaqqiyatli yuborildi", data:salom.rows})
 
             }
         }
