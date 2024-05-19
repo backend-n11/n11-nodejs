@@ -25,7 +25,7 @@ class Database {
         VALUES ($1, $2, $3)
         returning *;
       `
-
+      
       const hash = await this.hashFunc(password)
       const res = await this.client.query(inserUser, [name, hash, email])
       return res.rows
