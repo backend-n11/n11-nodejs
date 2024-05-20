@@ -1,0 +1,35 @@
+{
+  "name": "n11",
+  "version": "1.0.0",
+  "description": "Nodejs backend n11",
+  "main": "src/server.js",
+  "type":"module",
+  "scripts": {
+    "start:dev": "nodemon src/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xam1dullo/n11-nodejs.git"
+  },
+  "keywords": [
+    "js",
+    "ts",
+    "nodejs",
+    "backend"
+  ],
+  "author": "khkhamidullo@gmail.coom",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/xam1dullo/n11-nodejs/issues"
+  },
+  "homepage": "https://github.com/xam1dullo/n11-nodejs#readme",
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "mongoose": "^8.4.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0"
+  }
+}
