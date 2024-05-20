@@ -23,6 +23,15 @@ const userSchema = new mongoose.Schema({
   }
 });
 
+const User = mongoose.model('User', userSchema);
+
+const bookSchema = new mongoose.Schema({
+  author: {
+    type: SchemaTypes.ObjectId,
+    ref: "User"
+  }
+});
+
 userSchema.pre('save', function(next) {
 
   if (this.age > 25) {
@@ -33,7 +42,6 @@ userSchema.pre('save', function(next) {
 });
 
 
-const User = mongoose.model('User', userSchema);
 
 export default User;
 

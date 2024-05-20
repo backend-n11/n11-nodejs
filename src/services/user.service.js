@@ -33,3 +33,11 @@ export const createUser = async (userData) => {
   }
 };
 
+
+if (process.env.DATABASE_TYPE === "SQL") {
+
+}
+
+
+
+
