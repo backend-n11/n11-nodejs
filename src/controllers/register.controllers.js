@@ -1,3 +1,3 @@
 export const registerController = (req, res) => {
-    res.send("registerController")
+    res.send(process.env.greeting)
 }

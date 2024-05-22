@@ -1,23 +1,34 @@
 import dotenv from "dotenv"
 import express from "express"
-import {
-    registerRoute,
-    loginRoute
-} from "./src/routes/index.js"
+import routes from "./src/routes/index.js"
+import mongoose from "mongoose"
+
 dotenv.config()
 
 const PORT = process.env.PORT
 const NODE_ENV = process.env.NODE_ENV
+const MONGO_URI = process.env.MONGO_URI
+
+
+
+try {
+  const db = await mongoose.connect(MONGO_URI)
+  console.log('DATABASE CONNECTED')
+} catch (error) {
+  console.error(error);
+}
+
+
 
 const app = express()
+app.use(express.json())
 
-app.use('/register', registerRoute)
-app.use('/login', loginRoute)
+app.use(routes)
 
 if (NODE_ENV !== 'production') {
-    console.log(("Hello DEVELOPER"))
+  console.log(("Hello DEVELOPER"))
 }
 
 app.listen(PORT, () => {
-    console.log(`Server is running on port :${PORT}`)
+  console.log(`Server is running on port :${PORT}`)
 })
