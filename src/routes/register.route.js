@@ -1,12 +1,12 @@
 import {
-    Router
+  Router
 } from "express";
 import {
-    registerController
+  registerController
 } from "../controllers/register.controllers.js"
 
 const router = Router()
 
-router.get('/', registerController)
+router.post('/', registerController)
 
 export default router

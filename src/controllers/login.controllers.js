@@ -1,9 +1,13 @@
-
-import { saveData } from "../services/index.js"
+import {
+  findUser
+} from "../services/index.js"
 
 export const loginController = async (req, res) => {
+  const {
+    email,
+    password
+  } = req.body
 
-  const data = await saveData()
-  console.log(data)
-  res.send("loginController")
+  const user = await findUser(email)
+  res.json(user)
 }
