@@ -1,0 +1,28 @@
+# REST service
+
+**Create an application, the application should operate with the following resources:**
+
+- `User` (with attributes):
+  ```javascript
+  { id, name, login, password } TODO: joi ishlatish kerak!
+  ```
+
+  ```
+- `Task`:
+  ```javascript
+  {id, title, description, userId} TODO: JOi ishlatish kerak! 
+  ```
+**Details:**
+1. For `User`, `Task` REST endpoints with separate router paths should be created
+    * `User` (`/users` route)
+      * `GET /users` - get all users (remove password from response)
+      * `GET /users/:userId` - get the user by id (ex. “/users/123”) (remove password from response)
+      * `POST /users` - create user
+      * `PUT /users/:userId` - update user
+      * `DELETE /users/:userId` - delete user
+    * `Task` (`/tasks` route)
+      * `GET /tasks/` - get all tasks
+      * `GET /tasks/:taskId` - get the task by id
+      * `POST /tasks` - create task
+      * `PUT /tasks/:taskId` - update task
+      * `DELETE /tasks/:taskId` - delete task

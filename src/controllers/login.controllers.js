@@ -1,3 +1,4 @@
+import Joi from "joi"
 import {
   findUser
 } from "../services/index.js"
@@ -7,6 +8,7 @@ export const loginController = async (req, res) => {
     email,
     password
   } = req.body
+  
 
   const user = await findUser(email)
   res.json(user)
