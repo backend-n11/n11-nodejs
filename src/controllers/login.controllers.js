@@ -1,14 +1,14 @@
 import Joi from "joi"
 import {
   findUser
-} from "../services/index.js"
+} from "../services/user.js"
 
 export const loginController = async (req, res) => {
   const {
     email,
     password
   } = req.body
-  
+
 
   const user = await findUser(email)
   res.json(user)

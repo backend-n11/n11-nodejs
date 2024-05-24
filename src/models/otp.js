@@ -2,14 +2,14 @@ import mongoose from "mongoose";
 
 const { Schema, model } = mongoose;
 
-const user = new Schema({
+const otp = new Schema({
 	email: {
 		type: String,
-		unique: true,
+		require: true,
+		unique: true
 	},
-	password: {
+	otp: {
 		type: String,
-		min: 5,
 		require: true,
 	},
 	createAt: {
@@ -20,4 +20,4 @@ const user = new Schema({
 
 
 
-export default model("users", user);
+export default model("otps", otp);
