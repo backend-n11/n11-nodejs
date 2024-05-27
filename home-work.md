@@ -1,9 +1,10 @@
-### Uyga Vazifa: ITINFO Loyihasi uchun CRUD Operatsiyalarini Yozish
+### Uyga Vazifa: ITINFO Loyihasi uchun CRUD Operatsiyalarini Yozish va JWT ni Integratsiya Qilish
 
 ### Vazifalar Ro'yxati:
 
 1. **Author va Category jadvallari uchun CRUD operatsiyalarini yozish**
 2. **User va Admin kolleksiyalari uchun validatsiya va CRUD operatsiyalarini yozish**
+3. **JWT orqali autentifikatsiya tizimini qo'shish**
 
 ### 1. Author va Category jadvallari uchun CRUD operatsiyalari
 
@@ -19,7 +20,7 @@
 - Category yangilash
 - Category o'chirish
 
-### 2. User va Admin kolleksiyalari uchun validatsiya va CRUD operatsiyalari
+### 2. SuperAdmin User va Admin kolleksiyalari uchun validatsiya va CRUD operatsiyalari
 
 #### User CRUD operatsiyalari:
 - User yaratish (SuperAdmin)
@@ -32,6 +33,13 @@
 - Admin o'qish (SuperAdmin)
 - Admin yangilash (SuperAdmin)
 - Admin o'chirish (SuperAdmin)
+
+### 3. JWT orqali autentifikatsiya tizimini qo'shish
+
+#### Vazifalar:
+- JWT token yaratish
+- Login va token olish uchun endpoint yaratish
+- JWT orqali himoyalangan endpointlarni autentifikatsiya qilish
 
 ### API Yo'nalishlari
 
@@ -124,78 +132,54 @@
 - Kategoriyani o'chirish:
   ```bash
   DELETE localhost:4000/admin/category/{category_id}
+  ```
 
-### Loyihani Qurish Qadamlar:
-1. **Loyihani yaratish va kerakli paketlarni o'rnatish:**
-   
+**User CRUD operatsiyalari:**
+- Foydalanuvchini yaratish:
+  ```bash
+  POST localhost:4000/admin/user/
+  Body:
+    {
+      "email": "user@example.com",
+      "password": "strong_password",
+      // Boshqa foydalanuvchi xususiyatlari (ismi, roli, h.k.)
+    }
+  ```
 
-2. **MongoDB ulanishini sozlash:**
-   - `.env` faylini yarating va MongoDB ulanish URI ni saqlang.
-   - `mongoose` yordamida MongoDB ma'lumotlar bazasiga ulaning.
+- Foydalanuvchini o'qish:
+  ```bash
+  GET localhost:4000/admin/user/
+  ```
 
-3. **Mongoose Modellarini yaratish:**
-   - Author, Category, User va Admin kolleksiyalari uchun Mongoose modellarini yarating.
+- Foydalanuvchini yangilash:
+  ```bash
+  PUT localhost:4000/admin/user/{user_id}
+  Body:
+    {
+      // Yangilanishi kerak bo'lgan xususiyatlar (masalan, email, parol)
+    }
+  ```
 
-4. **Joi yordamida validatsiya qilish:**
-   - Author, Category, User va Admin kolleksiyalari uchun validatsiya sxemalarini yarating.
+### Admin roli cheklovlari:
+- Admin foydalanuvchi va kataloglarni o'chira olmaydi, ammo yaratish va yangilash mumkin.
 
-5. **Express yo'nalishlari va controllerlarni yaratish:**
-   - CRUD operatsiyalarini amalga oshiruvchi yo'nalishlar va controllerlar yarating.
+### Vazifa bo'yicha qo'llanma
 
-6. **Autentifikatsiya va avtorizatsiya tizimini qo'shish:**
-   - JWT yordamida autentifikatsiya tizimini amalga oshiring.
-   - Foydalanuvchilarni rollarga asoslangan ravishda avtorizatsiya qiling.
+#### 1. Author va Category CRUD operatsiyalarini yozish
+- Har bir operatsiya uchun kerakli endpointlarni yozing (`POST`, `GET`, `PUT`, `DELETE`).
+- Ma'lumotlarni saqlash va olish uchun mos keladigan modellarni yarating ( Mongoose  yordamida).
 
-7. **Xatoliklarni boshqarish va test qilish:**
-   - Xatoliklarni boshqarish mexanizmini amalga oshiring.
-   - Postman yoki boshqa API test vositalari yordamida API ni sinab ko'ring.
+#### 2. User va Admin validatsiya va CRUD operatsiyalarini yozish
+- SuperAdmin roliga ega foydalanuvchi tomonidan boshqariladigan CRUD operatsiyalarini yozing.
+- Yaratish, o'qish, yangilash va o'chirish uchun endpointlarni yozing.
 
-### Kod Namunalari:
-
-#### MongoDB Ulanishi (`src/config/db.js`):
-
-#### User Modeli (`src/models/userModel.js`):
-
-#### User Validatsiyasi (`src/validations/userValidation.js`):
-
-#### User Controlleri (`src/controllers/userController.js`):
-
-
-#### User Yo'nalishlari (`src/routes/userRoutes.js`):
+#### 3. JWT orqali autentifikatsiya tizimini qo'shish
+- JWT token yaratish uchun login endpointini yozing (`POST /login`).
+- Himoyalangan endpointlar uchun JWT autentifikatsiya middleware yarating.
+- JWT tokenlarni tekshirish uchun middleware ni endpointlarga qo'llang.
 
 ### Yakuniy eslatmalar:
-- Loyihangizni boshlash uchun ko'rsatilgan qadamlarni bajaring.
-- CRUD operatsiyalarini har bir model va controller uchun bajaring.
-- API nuqtalarini sinovdan o'tkazish uchun Postman yoki boshqa vositalardan foydalaning.
-- Xatoliklarni boshqarish mexanizmini amalga oshiring.
+1. **Kod strukturasini va xavfsizlikni ta'minlash uchun middleware dan foydalaning.**
+2. **API nuqtalarini sinovdan o'tkazish uchun Postman yoki boshqa vositalardan foydalaning.**
 
-Agar sizda qo'shimcha savollar yoki tushunmovchiliklar bo'lsa, marhamat qilib so'rang!
-
-
-
-### 3. Modellarni yaratish
-
-**Author modeli (`src/models/authorModel.js`):**
-
-**Category modeli (`src/models/categoryModel.js`):**
-
-**Admin modeli (`src/models/adminModel.js`):**
-
-### 4. Validatsiya qilish
-
-**Author validatsiyasi (`src/validations/authorValidation.js`):**
-
-**Category validatsiyasi (`src/validations/categoryValidation.js`):**
-
-**Admin validatsiyasi (`src/validations/adminValidation.js`):**
-
-### 5. Controllerlarni yaratish
-
-**Author controlleri (`src/controllers/authorController.js`):**
-``````
-
-**Category controlleri (`src/controllers/categoryController.js`):**
-
-**Admin controlleri (`src/controllers/adminController.js`):**
-
-
+# Agar qo'shimcha savollar yoki tushunmovchiliklar bo'lsa, marhamat qilib so'rang!
