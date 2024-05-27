@@ -1,3 +1,5 @@
+import jwt from "jsonwebtoken"
+
 import User from "../models/user.js";
 export const saveUser = (email, password) => {
 	const newUser = new User({
@@ -16,7 +18,18 @@ export const findUser = async (email) => {
 		email,
 	})
 
-	return newUser;
+	const token = jwt.sign({ sub: email }, process.env.secretKey)
+
+	return token;
+};
+
+
+export const getMe = async (email) => {
+
+	const user = await User.findOne({
+		email,
+	})
+	return user
 };
 
 

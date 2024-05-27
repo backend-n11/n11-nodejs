@@ -197,3 +197,5 @@ Agar sizda qo'shimcha savollar yoki tushunmovchiliklar bo'lsa, marhamat qilib so
 **Category controlleri (`src/controllers/categoryController.js`):**
 
 **Admin controlleri (`src/controllers/adminController.js`):**
+
+

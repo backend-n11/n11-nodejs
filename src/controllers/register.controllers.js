@@ -4,7 +4,7 @@ import { saveUser } from "../services/user.js";
 import { saveOtp } from "../services/otp.js";
 
 export const registerController = async (req, res) => {
-  const { email, password, confimPassword } = req.body
+  const { email, password } = req.body
 
   const registerSchema = Joi.object({
     email: Joi.string().email().required(),
