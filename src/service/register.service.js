@@ -7,7 +7,7 @@ const registerService = async (data) => {
     const result = await user.save()
     return result
   } catch (error) {
-    console.error(error)
+    throw Error(error.message)
   }
 }
 

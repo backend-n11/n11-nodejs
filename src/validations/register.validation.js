@@ -9,7 +9,7 @@ const registerSchema = Joi.object({
 const registerValication = (data) => {
   const { error, value } = registerSchema.validate(data)
   if (error) {
-    throw new Error("Validation Error | Ivalid data")
+    throw new Error("Validation Error")
   }
 }
 
