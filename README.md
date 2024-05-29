@@ -39,3 +39,18 @@
 - 37-dars
 - 38-dars
 - 39-dars
+
+
+
+```env
+# mongodb://username:password@host:port/database?options
+MONGO_URI=mongodb://localhost:27017/mydatabase
+PORT=5000
+
+SALT_ROUND = 10
+JWT_ACCESS_KEY = salomDunyo
+JWT_ACCESS_TOKEN_EXPIRESIN = 1m
+
+JWT_REFRESH_KEY = salomDunyo
+
+```
