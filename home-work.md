@@ -44,7 +44,7 @@ Quyida har bir API endpoint uchun qabul qilinadigan va qaytariladigan ma'lumotla
      ```json
      {
        "accessToken": "string",
-       refreshToken: string
+        "refreshToken": "string"
      }
      ```
 
@@ -307,6 +307,7 @@ Quyida har bir API endpoint uchun qabul qilinadigan va qaytariladigan ma'lumotla
    - **Qabul qilinadigan ma'lumotlar:**
      ```json
      {
+       "userid":"string",
        "courseId": "string"
      }
      ```
