@@ -13,7 +13,7 @@ const loginService = async (data) => {
 
     return token
   } catch (error) {
-    console.error(error)
+    throw error(error.mess)
   }
 }
 

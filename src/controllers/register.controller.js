@@ -8,9 +8,7 @@ const registerController = async (req, res) => {
     const { body } = req
     registerValication(body)
     const user = await registerService(body)
-    if (!user) {
-      throw new MyError('User Not Found', 404)
-    }
+
     res.json(user)
   } catch (error) {
     // TODO: HANDLE VALIDATION ERROR
@@ -19,9 +17,11 @@ const registerController = async (req, res) => {
     }
 
     // TODO: HANDLE SERVICE ERROR
-    if (error.message == "") {
-      return res.status(400).send(APP_ERROR_MESSAGE.invalidEmail)
+    if (error.message == "Mongoose error") {
+      return res.status(statusCode).send(APP_ERROR_MESSAGE.invalidEmail)
     }
+
+
     // res.status(error.statuCode).send(error.message)
   }
 }
