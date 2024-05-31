@@ -5,8 +5,8 @@ import otpValication from "../validations/otp.validation.js"
 const otpController = async (req, res) => {
   try {
     const { body } = req
-    const {error} = otpValication(body)
-    if(error){
+    const s = otpValication(body)
+    if(!s){
       return res.status(401).send("malumotlarni kiritishda xatolik mavjud")
     }
     const user = await otpService(body)
