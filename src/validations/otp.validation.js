@@ -7,10 +7,11 @@ const otpSchema = Joi.object({
 
 
 const otpValication = (data) => {
-  const { error, value } = otpSchema.validate(data)
-  if (error) {
-    throw new Error("Validation Error")
+  const {error} = otpSchema.validate(data)
+  if(!error){
+    return true
   }
+  return false
 }
 
 
