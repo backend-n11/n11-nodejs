@@ -1,11 +1,11 @@
-import User from "../models/user.model.js"
+import { Users } from "../models/index.js"
 import { tokenGenerator } from '../utils/jwt.js'
 
 
 const loginService = async (data) => {
   try {
 
-    const user = User.findOne({
+    const user = Users.findOne({
       email: data.email
     })
 

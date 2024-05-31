@@ -4,6 +4,7 @@ import {
 } from "../constants/HttpstatusCodes.js"
 
 
+
 export class MyError extends Error {
   constructor (message, statuCode) {
     super(message)

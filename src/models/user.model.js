@@ -13,6 +13,10 @@ const userSchema = new Schema({
     min: 5,
     max: 10,
     require: true
+  },
+  status: {
+    type: Boolean,
+    default: false
   }
 }, {
   timestamps: true,
@@ -25,4 +29,12 @@ userSchema.pre('save', async function (next) {
 });
 
 
-export default model('users', userSchema);
+userSchema.methods.comparePassword = function (candidatePassword) {
+  const result = bcrypt.compare(candidatePassword, this.password)
+  return result
+}
+
+
+
+
+export const Users = model('users', userSchema);
