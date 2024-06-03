@@ -1,6 +1,8 @@
 import nodemailer from "nodemailer"
+import dotenv from "dotenv"
+dotenv.config()
 
-
+console.log(process.env)
 const transporter = nodemailer.createTransport({
   host: "smtp.gmail.com",
   port: 465,
@@ -12,15 +14,21 @@ const transporter = nodemailer.createTransport({
 })
 
 async function sendMail(email, otp) {
+  try {
+    const info = await transporter.sendMail({
+      to: email,
+      subject: "OTP VERIFY",
+      html: `<h1>  Assalomu alaykym ${email}  <br> Sizning OTP :${otp}  </h1>`
+    })
 
-  const info = await transporter.sendMail({
-    to: email,
-    subject: "OTP VERIFY",
-    html: `<h1>  Assalomu alaykym ${email}  <br> Sizning OTP :${otp}  </h1>`
-  })
+    console.log({ info });
 
-  console.log("Message sent: %s", info.messageId);
-  return info.messageId
+    return info.messageId
+  } catch (error) {
+    console.log(error)
+  }
+
+
 }
 
 export default sendMail
