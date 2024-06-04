@@ -1,15 +1,23 @@
 import jwt from "jsonwebtoken"
 
+const { verify } = jwt
+export const tokenGenerator = async (payload, secretKey, expiresIn) => {
 
-export const tokenGenerator = (data) => {
-  var accesToken = jwt.sign(data, process.env.JWT_ACCESS_KEY, { expiresIn: process.env.JWT_ACCESS_TOKEN_EXPIRESIN })
-
-  return accesToken
+  const token = await jwt.sign(payload, secretKey, {
+    expiresIn,
+  })
+  return token
 }
 
 
-export const tokenVerify = (token) => {
-  var decoded = jwt.verify(token, JWT_ACCESS_KEY)
+export const tokenVerify = async (token, secretKey) => {
+  try {
+    console.log(token, secretKey)
+    const decoded = await verify(token, secretKey)
 
-  return decoded
+    return decoded
+  } catch (err) {
+    console.error(err)
+    return false
+  }
 }
