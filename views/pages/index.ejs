@@ -13,15 +13,47 @@
 
   <main>
     <div class="jumbotron">
-      <h1>This is great</h1>
-      <p>Welcome to templating using EJS</p>
+      <form>
+
+        <label for="email">Email</label>
+
+        <input type="email" name="email" id="email">
+
+        <label for="paswword">Password</label>
+
+        <input type="password" name="password" id="password">
+
+        <input type="submit" value="Yuborish">
+      </form>
+
     </div>
   </main>
 
   <footer>
     <%- include('../partials/footer'); %>
   </footer>
+  <script>
+    const formELement = document.querySelector("form")
+    const emailInputElement = document.querySelector("#email")
+    const passwordInputElement = document.querySelector("#password")
 
+    formELement.addEventListener("submit", async (e) => {
+      e.preventDefault()
+
+      const email = emailInputElement.value
+      const password = passwordInputElement.value
+
+      const result = await fetch("http://localhost:5000/register", {
+        method: "POST",
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email, password })
+      })
+      console.log(await result.json())
+    })
+  </script>
 </body>
 
 </html>
