@@ -1,0 +1,5 @@
+1. ejs 
+2. app.set('view engine', 'ejs');
+3. views folder
+4. index.ejs va ichiga html code yozish
+4. serverdan res.render("index",{malumot})

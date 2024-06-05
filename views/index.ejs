@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>
+    <%= title %>
+  </title>
+</head>
+
+<body>
+
+  <% for( let i=0; i < users.length; i++ ){ %>
+    <h2>
+      <%= users[i].name %>
+        <%= users[i].age%> yosh
+    </h2>
+    <% } %>
+
+</body>
+
+</html>
