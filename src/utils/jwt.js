@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken"
 
 const { verify } = jwt
 export const tokenGenerator = async (payload, secretKey, expiresIn) => {
-
+  console.log({ payload })
   const token = await jwt.sign(payload, secretKey, {
     expiresIn,
   })

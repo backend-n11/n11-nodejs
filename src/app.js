@@ -28,5 +28,8 @@ app.use("/otp/verify", otpRoute)
 app.use("/refreshToken", refreshRoute)
 
 app.use("/user", authGuard, userRoute)
+app.use((req, res, next) => {
+
+})
 
 export default app

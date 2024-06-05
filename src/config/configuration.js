@@ -1,5 +1,6 @@
 import { config } from "dotenv";
 config()
+
 export const configuration = {
   db: {
     uri: process.env.MONGO_URI,

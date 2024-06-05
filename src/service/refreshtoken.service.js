@@ -1,6 +1,6 @@
 import { configuration } from '../config/configuration.js'
 import { RefreshTokenModel } from '../models/index.js'
-import { tokenVerify } from '../utils/jwt.js'
+import { tokenGenerator, tokenVerify } from '../utils/jwt.js'
 
 const { jwt } = configuration
 export const refreshTokenService = async (token) => {
@@ -17,7 +17,13 @@ export const refreshTokenService = async (token) => {
     refreshToken: token
   })
 
-  console.log(refreshtoken)
+  if (!refreshToken) {
+    return {
+      message: "Invalid data"
+    }
+  }
+
+
 
 
 

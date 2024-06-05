@@ -4,6 +4,7 @@ import registerValication from "../validations/register.validation.js"
 const loginController = async (req, res) => {
   try {
     const { body } = req
+    console.log({ body })
     registerValication(body)
 
     const accesToken = await loginService(body)

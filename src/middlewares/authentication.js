@@ -10,6 +10,9 @@ const authencation = (req, res, next) => {
 
 
   var decoded = jwt.verify(token, process.env.JWT_ACCESS_KEY)
+  if (!decode) {
+    return res.status(401).send("unauthorized")
+  }
 
   req.user = decoded
 
