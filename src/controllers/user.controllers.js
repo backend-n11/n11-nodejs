@@ -1,7 +1,5 @@
-
+import { Users } from "../models/index.js"
 export const getMeController = (req, res) => {
   const { user } = req
-  console.log(user)
-
-  res.send("ok")
+  res.json(req.user)
 }

@@ -10,16 +10,6 @@ const otpController = async (req, res) => {
 
     res.json(user)
   } catch (error) {
-    // // TODO: HANDLE VALIDATION ERROR
-    // if (error.message == "Validation Error") {
-    //   return res.status(400).send(APP_ERROR_MESSAGE.invalidEmail)
-    // }
-
-    // // TODO: HANDLE SERVICE ERROR
-    // if (error.message == "Mongoose error") {
-    //   return res.status(400).send(APP_ERROR_MESSAGE.invalidEmail)
-    // }
-
 
     res.status(error).send(error.message)
   }

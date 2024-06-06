@@ -21,6 +21,7 @@ const loginService = async (data) => {
     }
     const payload = {
       sub: user.email,
+      role: user.roles
     }
 
 
