@@ -3,7 +3,12 @@ config()
 
 export const configuration = {
   db: {
-    uri: process.env.MONGO_URI,
+    mongo: {
+      uri: process.env.MONGO_URI,
+    },
+    pg: {
+      uri: process.env.POSTGRES_URI
+    }
   },
   jwt: {
     accessToken: {
