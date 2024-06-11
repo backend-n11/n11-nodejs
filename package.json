@@ -14,7 +14,9 @@
   "dependencies": {
     "@grammyjs/menu": "^1.2.1",
     "dotenv": "^16.4.5",
-    "grammy": "^1.24.1"
+    "grammy": "^1.24.1",
+    "otp-generator": "^4.0.1",
+    "pg": "^8.12.0"
   },
   "devDependencies": {
     "nodemon": "^3.1.3"
