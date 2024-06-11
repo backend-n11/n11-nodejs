@@ -26,8 +26,8 @@
   - **Telegram bot orqali:** `/verify` boti va "Share Contact" tugmasi orqali.
 - **Kiritiladigan Ma'lumotlar:**
   - **API orqali:** 
-    - `email_or_phone`: (string) Ro'yxatdan o'tishda kiritilgan email yoki telefon raqam
-    - `otp`: (string) Email yoki telefon orqali yuborilgan OTP
+    - `phone`: (string) Ro'yxatdan o'tishda kiritilgan  telefon raqam
+    - `otp`: (string) Telefon orqali yuborilgan OTP
   - **Telegram bot orqali:**
     - Foydalanuvchi "Start" tugmasini bosadi va bot orqali telefon raqamini ulashadi.
     - Bot foydalanuvchining telefon raqamini API orqali tekshiradi.
