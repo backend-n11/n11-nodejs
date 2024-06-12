@@ -14,10 +14,6 @@ const menu = new Menu('my-menu-identifier')
   .text('A', ctx => ctx.reply('You pressed A!')).row()
   .text('B', ctx => ctx.reply('You pressed B!'))
 
-// const keyboard = new InlineKeyboard()
-//   .text('A').text('B', 'callback-data').row()
-//   .text('C').text('D').row()
-//   .url('Telegram', 'telegram.org')
 
 const keyboard = new Keyboard()
   .requestContact("📱 Kontaktni yuborish")

@@ -13,13 +13,6 @@ export const pool = new Pool({
 
 
 
-// pool.connect((err) => {
-//   if (err) {
-//     console.error(err)
-//   }
-//   console.log("Database connected!")
-// })
-
 
 
 
