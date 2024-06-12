@@ -13,10 +13,28 @@ await bot.api.setMyCommands([
   { command: "hunger", description: "Show pizza level count" },
   { command: "change", description: "change current menu" },
 ]);
-const phoneKeyboard = new Keyboard().text("Samsung").text("Nothing").row().text("Xiomi").text("Iphone").row().text("Orqaga")
-const samsungPhoneKeyboard = new Keyboard().text("Samsung 21").text("Samsung 41").row().text("Samsung 12").text("Samsung 44").row().text("Orqaga")
-const mainKeyboard = new Keyboard().text("Telefonlar").text("Laptoplar").row().text("Dilbuzar").text("Texnik")
-
+const phoneKeyboard = new Keyboard()
+  .text("Samsung")
+  .text("Nothing")
+  .row()
+  .text("Xiomi")
+  .text("Iphone")
+  .row()
+  .text("Orqaga");
+const samsungPhoneKeyboard = new Keyboard()
+  .text("Samsung 21")
+  .text("Samsung 41")
+  .row()
+  .text("Samsung 12")
+  .text("Samsung 44")
+  .row()
+  .text("Orqaga");
+const mainKeyboard = new Keyboard()
+  .text("Telefonlar")
+  .text("Laptoplar")
+  .row()
+  .text("Dilbuzar")
+  .text("Texnik");
 
 bot.command("start", async (ctx) => {
   await ctx.reply("Here is your main keyboard!", {
@@ -29,7 +47,6 @@ bot.command("phone", async (ctx) => {
     reply_markup: phoneKeyboard,
   });
 });
-
 
 bot.command("hunger", async (ctx) => {
   const count = ctx.session.pizzaCount;
@@ -45,29 +62,31 @@ bot.command("change", async (ctx) => {
 
 bot.hears(/.*pizza.*/, (ctx) => ctx.session.pizzaCount++);
 
-bot.hears("Telefonlar", async(ctx) => {
-  ctx.session.currentMenu = "Telefonlar"
+bot.hears("Telefonlar", async (ctx) => {
+  ctx.session.currentMenu = "Telefonlar";
 
   await ctx.reply("Here is your Phones keyboard!", {
     reply_markup: phoneKeyboard,
   });
 });
 
-bot.hears("Samsung", async(ctx) => {
+bot.hears("Samsung", async (ctx) => {
   await ctx.reply("Here is your Sumsung Phones keyboard!", {
     reply_markup: samsungPhoneKeyboard,
   });
 });
 
-
-bot.hears("Orqaga", async(ctx) => {
-const currentMenu =  ctx.session.currentMenu
-if(currentMenu === "Telefonlar"){
- return  await ctx.reply("Here is your main keyboard!", {
-    reply_markup: mainKeyboard,
+bot.hears("Orqaga", async (ctx) => {
+  const currentMenu = ctx.session.currentMenu;
+  if (["Telefonlar", "Dilbuzar", "Laptoplar", "Texnik"].includes(currentMenu)) {
+    return await ctx.reply("Here is your main keyboard!", {
+      reply_markup: mainKeyboard,
+    });
+  } else if (["Samsung 12", "Samsung 21", "Samsung 41", "Samsung 44"].includes(currentMenu)) {
+  return  await ctx.reply("Here is your Phones keyboard!", {
+    reply_markup: phoneKeyboard,
   });
-}
-
+  }
   await ctx.reply("Here is your Phones keyboard!", {
     reply_markup: phoneKeyboard,
   });
