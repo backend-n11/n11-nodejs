@@ -71,6 +71,7 @@ bot.hears("Telefonlar", async (ctx) => {
 });
 
 bot.hears("Samsung", async (ctx) => {
+  ctx.session.currentMenu = "Samsung";
   await ctx.reply("Here is your Sumsung Phones keyboard!", {
     reply_markup: samsungPhoneKeyboard,
   });
@@ -78,14 +79,18 @@ bot.hears("Samsung", async (ctx) => {
 
 bot.hears("Orqaga", async (ctx) => {
   const currentMenu = ctx.session.currentMenu;
+  console.log({ currentMenu });
   if (["Telefonlar", "Dilbuzar", "Laptoplar", "Texnik"].includes(currentMenu)) {
+    ctx.session.currentMenu = "mainMenu";
+
     return await ctx.reply("Here is your main keyboard!", {
       reply_markup: mainKeyboard,
     });
-  } else if (["Samsung 12", "Samsung 21", "Samsung 41", "Samsung 44"].includes(currentMenu)) {
-  return  await ctx.reply("Here is your Phones keyboard!", {
-    reply_markup: phoneKeyboard,
-  });
+  } else if (["Samsung", "Nothing", "Xiomi", "Iphone"].includes(currentMenu)) {
+    ctx.session.currentMenu = "Telefonlar";
+    return await ctx.reply("Here is your main keyboard!", {
+      reply_markup: phoneKeyboard,
+    });
   }
   await ctx.reply("Here is your Phones keyboard!", {
     reply_markup: phoneKeyboard,
