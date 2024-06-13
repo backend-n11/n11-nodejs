@@ -1,119 +1,225 @@
-### Talablar va Funksionallik
+### REST API Talablari va Tasvirlangan Ma'lumotlar
 
-#### 1. **Xonalar va foydalanuvchilar haqida ma'lumotlar**
+#### Ma'lumotlar Modellari
 
-- **Room**:
-  - `id`: integer, primary key
-  - `name`: string, not null
-  - `floor`: integer, not null
-  - `seats`: integer, not null
+**Xona Modeli (`Room`)**
+- **name** (string) - Xonaning nomi.
+- **floor** (integer) - Xonaning joylashgan qavati.
+- **seats** (integer) - Xonadagi o'rindiqlar soni.
 
-- **User**:
-  - `id`: integer, primary key
-  - `username`: string, not null, unique
-  - `password`: string, not null (hashed)
-  - `role`: string, not null (e.g., "user", "admin")
+**Foydalanuvchi Modeli (`User`)**
+- **username** (string) - Foydalanuvchi nomi, unikal bo'lishi kerak.
+- **password** (string) - Foydalanuvchi paroli, shaxtalangan.
+- **role** (string) - Foydalanuvchi roli (masalan, 'admin', 'user').
 
-#### 2. **API Endpoints va Ma'lumotlar**
+#### API Endpointlar
 
-##### Autentifikatsiya:
+1. **Foydalanuvchi ro'yxatdan o'tish (Sign Up)**
 
-- **POST /signup**:
-  - Kiruvchi: `{ "username": "user1", "password": "pass123", "role": "user" }`
-  - Chiquvchi: `{ "id": 1, "username": "user1", "role": "user" }`
+   - **Endpoint**: `POST /auth/signup`
+   - **Kiruvchi ma'lumotlar**:
+     ```json
+     {
+       "username": "example",
+       "password": "password123",
+       "role": "user" // yoki "admin"
+     }
+     ```
+   - **Qaytadigan ma'lumotlar**:
+     ```json
+     {
+       "id": 1,
+       "username": "example",
+       "role": "user"
+     }
+     ```
 
-- **POST /signin**:
-  - Kiruvchi: `{ "username": "user1", "password": "pass123" }`
-  - Chiquvchi: `{ "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...", "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..." }`
+2. **Foydalanuvchi tizimga kirish (Sign In)**
 
-- **POST /token** (Access tokenni yangilash):
-  - Kiruvchi: `{ "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..." }`
-  - Chiquvchi: `{ "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..." }`
+   - **Endpoint**: `POST /auth/signin`
+   - **Kiruvchi ma'lumotlar**:
+     ```json
+     {
+       "username": "example",
+       "password": "password123"
+     }
+     ```
+   - **Qaytadigan ma'lumotlar**:
+     ```json
+     {
+       "accessToken": "access-token",
+       "refreshToken": "refresh-token"
+     }
+     ```
 
-- **GET /me** (Hozirgi foydalanuvchini olish):
-  - Kiruvchi: `Bearer <accessToken>`
-  - Chiquvchi: `{ "id": 1, "username": "user1", "role": "user" }`
+3. **Foydalanuvchi ma'lumotlarini olish (Get Current User)**
 
-##### Xonalar:
+   - **Endpoint**: `GET /auth/me`
+   - **Talab**: `Authorization: Bearer <access-token>`
+   - **Qaytadigan ma'lumotlar**:
+     ```json
+     {
+       "id": 1,
+       "username": "example",
+       "role": "user"
+     }
+     ```
 
-- **GET /rooms**:
-  - Kiruvchi: `Bearer <accessToken>`
-  - Chiquvchi: 
+4. **Barcha xonalarni olish (Get All Rooms)**
+
+   - **Endpoint**: `GET /rooms`
+   - **Talab**: `Authorization: Bearer <access-token>` 
+   - **Qaytadigan ma'lumotlar**:
+     ```json
+     [
+       {
+         "id": 1,
+         "name": "Autodesk",
+         "floor": 2,
+         "seats": 17
+       },
+       {
+         "id": 2,
+         "name": "Yandex",
+         "floor": 2,
+         "seats": 20
+       }
+     ]
+     ```
+
+5. **ID bo'yicha xona olish (Get Room by ID)**
+
+   - **Endpoint**: `GET /rooms/:id`
+   - **Talab**: `Authorization: Bearer <access-token>`
+   - **Qaytadigan ma'lumotlar**:
+     ```json
+     {
+       "id": 1,
+       "name": "Autodesk",
+       "floor": 2,
+       "seats": 17
+     }
+     ```
+
+6. **Yangi xona qo'shish (Create Room)**
+
+   - **Endpoint**: `POST /rooms`
+   - **Talab**: `Authorization: Bearer <access-token>` + `admin` roli talab qilinadi.
+   - **Kiruvchi ma'lumotlar**:
+     ```json
+     {
+       "name": "New Room",
+       "floor": 1,
+       "seats": 10
+     }
+     ```
+   - **Qaytadigan ma'lumotlar**:
+     ```json
+     {
+       "id": 3,
+       "name": "New Room",
+       "floor": 1,
+       "seats": 10
+     }
+     ```
+
+7. **Xonani yangilash (Update Room)**
+
+   - **Endpoint**: `PUT /rooms/:id`
+   - **Talab**: `Authorization: Bearer <access-token>` + `admin` roli talab qilinadi.
+   - **Kiruvchi ma'lumotlar**:
+     ```json
+     {
+       "name": "Updated Room",
+       "floor": 2,
+       "seats": 25
+     }
+     ```
+   - **Qaytadigan ma'lumotlar**:
+     ```json
+     {
+       "id": 1,
+       "name": "Updated Room",
+       "floor": 2,
+       "seats": 25
+     }
+     ```
+
+8. **Xonani o'chirish (Delete Room)**
+
+   - **Endpoint**: `DELETE /rooms/:id`
+   - **Talab**: `Authorization: Bearer <access-token>` + `admin` roli talab qilinadi.
+   - **Qaytadigan ma'lumotlar**: 
+     ```json
+     {
+       "message": "Room deleted successfully"
+     }
+     ```
+
+#### Access Token va Refresh Token
+
+- **Access Token**:
+  - Kirish tokeni foydalanuvchini autentifikatsiya qilish uchun ishlatiladi.
+  - **Yaroqlilik muddati**: odatda qisqa (15-30 daqiqa).
+  - **Talab**: Har bir himoyalangan endpointda `Authorization: Bearer <access-token>` ko'rsatilishi kerak.
+
+- **Refresh Token**:
+  - Kirish tokeni muddati tugaganda yangilash uchun ishlatiladi.
+  - **Yaroqlilik muddati**: uzoqroq (bir necha kun yoki haftalar).
+  - **Talab**: `POST /auth/refresh-token` endpointida yangilash so'rovi yuboriladi.
+
+**Endpoint**: `POST /auth/refresh-token`
+  - **Kiruvchi ma'lumotlar**:
     ```json
-    [
-      { "id": 1, "name": "Autodesk", "floor": 2, "seats": 17 },
-      { "id": 2, "name": "Yandex", "floor": 2, "seats": 20 }
-    ]
+    {
+      "refreshToken": "refresh-token"
+    }
+    ```
+  - **Qaytadigan ma'lumotlar**:
+    ```json
+    {
+      "accessToken": "new-access-token",
+      "refreshToken": "new-refresh-token"
+    }
     ```
 
-- **GET /rooms/:id**:
-  - Kiruvchi: `Bearer <accessToken>`
-  - Chiquvchi: 
-    ```json
-    { "id": 1, "name": "Autodesk", "floor": 2, "seats": 17 }
-    ```
+#### Role-based Authentication Guards
 
-- **POST /rooms** (faqat admin):
-  - Kiruvchi: `Bearer <accessToken>`
-  - Chiquvchi: `{ "id": 3, "name": "Google", "floor": 3, "seats": 30 }`
+**Role-based himoyani amalga oshirish** uchun har bir endpointda quyidagi elementlar hisobga olinadi:
 
-- **PUT /rooms/:id** (faqat admin):
-  - Kiruvchi: `Bearer <accessToken>`
-  - Chiquvchi: `{ "id": 1, "name": "Autodesk", "floor": 2, "seats": 18 }`
+1. **Role tekshiruvi**:
+   - Foydalanuvchining `role` ma'lumotini JWT dan olingan foydalanuvchi ma'lumotlari orqali tekshirish.
+   - `admin` roliga ega bo'lgan foydalanuvchilargina ma'lumotlarni yaratish, yangilash va o'chirish huquqiga ega bo'lishi kerak.
 
-- **DELETE /rooms/:id** (faqat admin):
-  - Kiruvchi: `Bearer <accessToken>`
-  - Chiquvchi: `{ "message": "Xona muvaffaqiyatli o'chirildi" }`
+**Misol**: `admin` roli uchun middleware
 
-#### 3. **Autentifikatsiya va Avtorizatsiya**
+```json
+{
+  "role": "admin",
+  "message": "Access denied. Admins only."
+}
+```
 
-- **Access token**: Har bir so'rovni autentifikatsiya qilish uchun ishlatiladi. JWT formatida bo'ladi.
-- **Refresh token**: Access token muddati tugaganda yangilash uchun ishlatiladi.
-- **Role-based access**: Foydalanuvchi rollariga asoslangan avtorizatsiya. Masalan, faqat admin foydalanuvchilarga xonalarni qo'shish, o'zgartirish va o'chirishga ruxsat beriladi.
+#### Hujjatlangan Ish Tartibi
 
-#### 4. **Middlewares**
+1. **API'ga kirish (Sign Up)**
+   - **Tavsif**: Yangi foydalanuvchi hisobini yaratadi.
+   - **Parametrlar**: `username`, `password`, `role`.
 
-- **Auth Middleware**:
-  - Kiruvchi: HTTP so'rovi (headerda `Bearer <accessToken>`)
-  - Chiquvchi: Foydalanuvchi JWT asosida tasdiqlanadi va so'rovga foydalanuvchi ma'lumotlari qo'shiladi.
+2. **API orqali tizimga kirish (Sign In)**
+   - **Tavsif**: Foydalanuvchi tizimga kiradi va token oladi.
+   - **Parametrlar**: `username`, `password`.
 
-- **Role Middleware**:
-  - Kiruvchi: Auth Middleware orqali tasdiqlangan foydalanuvchi
-  - Chiquvchi: Foydalanuvchi roli asosida avtorizatsiya qilingan.
+3. **Foydalanuvchi ma'lumotlarini olish**
+   - **Tavsif**: Token orqali foydalanuvchi ma'lumotlarini oladi.
+   - **Token tekshiruvi**: `Authorization` sarlavhasida token yuborilishi kerak.
 
-#### 5. **Ish jarayoni**
-
-1. **Foydalanuvchi ro'yxatdan o'tadi** (`/signup`):
-   - Ma'lumotlar `POST /signup` endpointiga yuboriladi.
-   - Yangi foydalanuvchi ma'lumotlar bazasiga qo'shiladi va qaytariladi.
-
-2. **Foydalanuvchi tizimga kiradi** (`/signin`):
-   - Ma'lumotlar `POST /signin` endpointiga yuboriladi.
-   - Foydalanuvchi ma'lumotlari tekshiriladi, access va refresh tokenlar qaytariladi.
-
-3. **Access tokenni yangilash** (`/token`):
-   - Refresh token orqali yangi access token olinadi.
-
-4. **Xonalar ro'yxatini olish** (`/rooms`):
-   - Foydalanuvchi `GET /rooms` endpointiga so'rov yuboradi.
-   - Xonalar ro'yxati qaytariladi.
-
-5. **Xonalar haqida batafsil ma'lumot olish** (`/rooms/:id`):
-   - Foydalanuvchi `GET /rooms/:id` endpointiga so'rov yuboradi.
-   - Xonaning batafsil ma'lumotlari qaytariladi.
-
-6. **Yangi xona qo'shish** (`/rooms`) (faqat admin):
-   - Admin foydalanuvchi `POST /rooms` endpointiga ma'lumot yuboradi.
-   - Yangi xona ma'lumotlar bazasiga qo'shiladi va qaytariladi.
-
-7. **Xonani yangilash** (`/rooms/:id`) (faqat admin):
-   - Admin foydalanuvchi `PUT /rooms/:id` endpointiga ma'lumot yuboradi.
-   - Xonaning yangilangan ma'lumotlari qaytariladi.
-
-8. **Xonani o'chirish** (`/rooms/:id`) (faqat admin):
-   - Admin foydalanuvchi `DELETE /rooms/:id` endpointiga so'rov yuboradi.
-   - Xona ma'lumotlar bazasidan o'chiriladi va muvaffaqiyat xabari qaytariladi.
+4. **Xonalar bilan ishlash (CRUD)**:
+   - **Xonalarni ko'rish**: Barcha foydalanuvchilar.
+   - **Xona qo'shish**: Faqat `admin`.
+   - **Xonani yangilash**: Faqat `admin`.
+   - **Xonani o'chirish**: Faqat `admin`.
 
 ### Xulosa
 
-Ushbu API xonalar va foydalanuvchilar haqida ma'lumotlarni boshqarishga imkon beradi. Autentifikatsiya va avtorizatsiya JWT orqali amalga oshiriladi. Foydalanuvchilar roli asosida xonalar bilan bog'liq operatsiyalar bajarilishi mumkin.
+Yuqoridagi tavsiflangan ma'lumotlar asosida REST API foydalanuvchi autentifikatsiyasi va xonalar boshqaruvi uchun xavfsiz va izchil yondashuvni ta'minlaydi. Endpointlar, kirish va qaytish formatlari, shuningdek autentifikatsiya va rol asosida himoya qilish aniq belgilanadi, bu API’ni xavfsiz va mustahkam qiladi.
