@@ -1,0 +1,11 @@
+## Generik Stack Funksiyasini Yaratish Shartlari
+
+1. **Stackni yaratish funksiyasini (`createStack`) aniqlash:**
+    - `createStack` funksiyasi generik parametr (`T`) qabul qiladi va stackni boshqarish uchun kerakli metodlarni qaytaradi.
+2. **Stack operatsiyalarini ta'minlaydigan metodlarni aniqlash:**
+    - `push(item: T): void` — Stackga yangi element qo'shadi.
+    - `pop(): T | undefined` — Stackning yuqori qismidagi elementni olib tashlaydi va uni qaytaradi.
+    - `peek(): T | undefined` — Stackning yuqori qismidagi elementni qaytaradi, lekin uni olib tashlamaydi.
+    - `isEmpty(): boolean` — Stack bo'sh yoki yo'qligini tekshiradi.
+    - `size(): number` — Stackdagi elementlar sonini qaytaradi.
+    - `clear(): void` — Stackdagi barcha elementlarni olib tashlaydi.
