@@ -1,4 +1,4 @@
-### Homework: TypeScriptda OOP va Interfeyslar
+# Homework: TypeScript'da OOP va Interfeyslar
 
 #### Task 1: Shape interfeysini yaratish va undan Circle va Rectangle classlarini yaratish
 
@@ -52,9 +52,7 @@
 
 
 
-### Homework: TypeScript'da OOP Classlar
-
-### Task: `Database` classi va `MongoDB` va `SQLDB` classlarini Yaratish
+## Task: `Database` classi va `MongoDB` va `SQLDB` classlarini Yaratish
 
 #### Task 1: `Database` classini Yaratish
 
