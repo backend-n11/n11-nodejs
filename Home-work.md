@@ -28,26 +28,6 @@ Keling, Uy Kutubxonasi Xizmatini yaratishga harakat qilamiz! `Users` `Artists`, 
   }
   ```
 
-- `Track` (xususiyatlar bilan):
-  ```typescript
-  interface Track {
-    id: string; // uuid v4
-    name: string;
-    artistId: string | null; // refers to Artist
-    albumId: string | null; // refers to Album
-    duration: number; // integer number
-  }
-  ```
-
-- `Album` (xususiyatlar bilan):
-  ```typescript
-  interface Album {
-    id: string; // uuid v4
-    name: string;
-    year: number;
-    artistId: string | null; // refers to Artist
-  }
-  ```
 
 - `Favorites` (xususiyatlar bilan):
   ```typescript
