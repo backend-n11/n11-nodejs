@@ -1,5 +1,5 @@
 {
-  "name": "first-nest",
+  "name": "nest-one",
   "version": "0.0.1",
   "description": "",
   "author": "",
@@ -65,6 +65,5 @@
     ],
     "coverageDirectory": "../coverage",
     "testEnvironment": "node"
-  },
-  "packageManager": "pnpm@8.10.5+sha1.4370a069f21873a0ad83c785b8048ed8caf6e6e9"
+  }
 }
