@@ -10,10 +10,11 @@ import {
 import { BookService } from "./book.service";
 import { CreateBookDto } from "./dto/create-book.dto";
 import { UpdateBookDto } from "./dto/update-book.dto";
+import { TodoService } from "src/todo/todo.service";
 
 @Controller("book")
 export class BookController {
-  constructor(private readonly bookService: BookService) {}
+  constructor(private readonly bookService: BookService, private readonly todoServive: TodoService) { }
 
   @Post()
   create(@Body() createBookDto: CreateBookDto) {
@@ -22,6 +23,8 @@ export class BookController {
 
   @Get()
   findAll() {
+
+    this.todoServive;
     return this.bookService.findAll();
   }
 
