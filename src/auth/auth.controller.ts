@@ -11,7 +11,7 @@ export class AuthController {
   constructor(private readonly authService: AuthService) { }
 
 
-  // @UseFilters(AllExceptionsFilter)
+  @UseFilters(AllExceptionsFilter)
   @Post()
   create(@Body() createAuthDto: CreateAuthDto) {
     return this.authService.create(createAuthDto);

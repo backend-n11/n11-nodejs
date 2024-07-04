@@ -21,6 +21,23 @@ export class CustomException extends HttpException {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 @Catch()
 export class AllExceptionsFilter implements ExceptionFilter {
   catch(exception: any, host: ArgumentsHost) {
@@ -28,8 +45,6 @@ export class AllExceptionsFilter implements ExceptionFilter {
     const ctx = host.switchToHttp()
     const request = ctx.getRequest() as Request
     const response: Response = ctx.getResponse()
-    const next = ctx.getNext()
-
     const method = request.method
     const url = request.url
     const statusCode = exception instanceof HttpException ? exception.getStatus() : HttpStatus.INTERNAL_SERVER_ERROR;
