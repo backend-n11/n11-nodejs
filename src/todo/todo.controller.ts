@@ -1,5 +1,4 @@
-import { Body, Controller, Delete, Get, Param, ParseBoolPipe, Patch, Post } from '@nestjs/common';
-import { create } from "domain";
+import { Body, Controller, Delete, Get, Param, ParseBoolPipe, Patch, Post, ValidationPipe } from '@nestjs/common';
 import { CreateTodoDto } from "./dto/create-todo.dto";
 import { UpdateTodoDto } from './dto/update-todo.dto';
 import { TodoService } from './todo.service';
@@ -9,13 +8,10 @@ export class TodoController {
   constructor(private readonly todoService: TodoService) { }
 
   @Post()
-  // create(@Body(new ValidationPipe()) createTodoDto: CreateTodoDto) {
-  create(@Body() createTodoDto: CreateTodoDto) {
-
+  create(@Body(new ValidationPipe({ whitelist: true })) createTodoDto: CreateTodoDto) {
+    // create(@Body() createTodoDto: CreateTodoDto) {
     return this.todoService.create(createTodoDto);
   }
-
-
 
   @Get()
   findAll() {
