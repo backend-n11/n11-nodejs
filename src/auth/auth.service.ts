@@ -7,7 +7,7 @@ export class AuthService {
   constructor(private readonly userSerice: UserService) {}
 
   signUp(singUpDto: SignUpDto) {
-    return this.userSerice.singUp(singUpDto);
+    return this.userSerice.signUp(singUpDto);
   }
 
   signIn(singInDto: SignInDto) {

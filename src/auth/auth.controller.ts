@@ -16,12 +16,12 @@ export class AuthController {
 
   @Post("signup")
   signup(@Body() singUpDto: SignUpDto) {
-    return this.authService.signup(singUpDto);
+    return this.authService.signUp(singUpDto);
   }
 
   @Post("signin")
   signin(@Body() singInDto: SignInDto) {
-    return this.authService.signin(singInDto);
+    return this.authService.signIn(singInDto);
   }
 
   @Post("refresh")
