@@ -4,10 +4,14 @@ import { UpdateUserDto } from "./dto/update-user.dto";
 import { SignInDto, SignUpDto } from "src/auth/dto";
 import { NotFoundError } from "rxjs";
 import { JwtService } from "@nestjs/jwt";
+import { ConfigService } from "@nestjs/config";
 
 @Injectable()
 export class UserService {
-  constructor(private readonly jwtService: JwtService) {}
+  constructor(
+    private readonly jwtService: JwtService,
+    // private readonly configService:ConfigService
+  ) {}
   private readonly users: any = [
     {
       name: "ali",
@@ -23,6 +27,10 @@ export class UserService {
 
   signUp(signUpDto: SignUpDto) {}
   signIn(signInDto: SignInDto) {
+    // const secret  = this.configService.get<string>("jwt.acces.")
+    // const secret2  = this.configService.get<string>("SECRET")
+
+    // console.log({secret})
     const user = this.users.find(
       (user) =>
         user.password == signInDto.password && user.email == signInDto.email,
@@ -35,6 +43,8 @@ export class UserService {
       sub: user.email,
       name: user.name,
     };
+
+
 
     const accessToken = this.jwtService.sign(payload, {
       secret: "qwert1235",

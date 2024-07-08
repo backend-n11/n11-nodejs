@@ -6,13 +6,26 @@ import {
   Patch,
   Param,
   Delete,
+  UseInterceptors,
 } from "@nestjs/common";
 import { AuthService } from "./auth.service";
 import { SignInDto, SignUpDto } from "./dto";
+import { LoggingInterceptor } from "./loggingInterceptor";
+import { Logger } from "@nestjs/common";
 
 @Controller("auth")
+// @UseInterceptors(LoggingInterceptor)
+
 export class AuthController {
+  private readonly logger = new Logger(AuthController.name)
   constructor(private readonly authService: AuthService) {}
+
+  @Get("healthcheck")
+// @UseInterceptors(LoggingInterceptor)
+  healthCheck(): string {
+    this.logger.error("SALOM DUNYO XATOSI")
+    return "cool";
+  }
 
   @Post("signup")
   signup(@Body() singUpDto: SignUpDto) {

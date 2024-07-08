@@ -1,16 +1,22 @@
 import { Injectable } from "@nestjs/common";
 import { SignInDto, SignUpDto } from "./dto";
 import { UserService } from "src/user/user.service";
+import { ConfigService } from "@nestjs/config";
 
 @Injectable()
 export class AuthService {
-  constructor(private readonly userSerice: UserService) {}
+  
+  constructor(
+    private readonly userSerice: UserService,
+    // private readonly configService:ConfigService
+  ) {}
 
   signUp(singUpDto: SignUpDto) {
     return this.userSerice.signUp(singUpDto);
   }
 
   signIn(singInDto: SignInDto) {
+    // this.configService.get('jwt')
     return this.userSerice.signIn(singInDto);
   }
 
