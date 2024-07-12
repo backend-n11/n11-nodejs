@@ -189,6 +189,224 @@ function arrayIntersection(arr1, arr2) {
 }
 ```
 
+# Bonus 
+Albatta, murakkabroq funksiyalar uchun test masalalarini yaratib beraman. Bu masalalar turli algoritmlar va ma'lumotlarni qayta ishlash usullarini o'z ichiga oladi.
+
+### 1. Matrix Addition
+**Funksiya:** Ikki matritsani qo'shish.
+**Misol:** `addMatrices([[1, 2], [3, 4]], [[5, 6], [7, 8]]) -> [[6, 8], [10, 12]]`
+```javascript
+function addMatrices(matrix1, matrix2) {
+  return matrix1.map((row, i) => row.map((val, j) => val + matrix2[i][j]));
+}
+```
+
+### 2. Matrix Multiplication
+**Funksiya:** Ikki matritsani ko'paytirish.
+**Misol:** `multiplyMatrices([[1, 2], [3, 4]], [[5, 6], [7, 8]]) -> [[19, 22], [43, 50]]`
+```javascript
+function multiplyMatrices(matrix1, matrix2) {
+  const result = Array(matrix1.length).fill(0).map(() => Array(matrix2[0].length).fill(0));
+  for (let i = 0; i < matrix1.length; i++) {
+    for (let j = 0; j < matrix2[0].length; j++) {
+      for (let k = 0; k < matrix1[0].length; k++) {
+        result[i][j] += matrix1[i][k] * matrix2[k][j];
+      }
+    }
+  }
+  return result;
+}
+```
+
+### 3. Merge Sort
+**Funksiya:** Massivni birlashma tartiblash usuli bilan tartiblash.
+**Misol:** `mergeSort([5, 3, 8, 4, 2]) -> [2, 3, 4, 5, 8]`
+```javascript
+function mergeSort(arr) {
+  if (arr.length <= 1) return arr;
+  const mid = Math.floor(arr.length / 2);
+  const left = mergeSort(arr.slice(0, mid));
+  const right = mergeSort(arr.slice(mid));
+  return merge(left, right);
+}
+
+function merge(left, right) {
+  const result = [];
+  while (left.length && right.length) {
+    if (left[0] < right[0]) {
+      result.push(left.shift());
+    } else {
+      result.push(right.shift());
+    }
+  }
+  return result.concat(left, right);
+}
+```
+
+### 4. Quick Sort
+**Funksiya:** Massivni tezkor tartiblash usuli bilan tartiblash.
+**Misol:** `quickSort([5, 3, 8, 4, 2]) -> [2, 3, 4, 5, 8]`
+```javascript
+function quickSort(arr) {
+  if (arr.length <= 1) return arr;
+  const pivot = arr[Math.floor(arr.length / 2)];
+  const left = arr.filter(x => x < pivot);
+  const right = arr.filter(x => x > pivot);
+  return quickSort(left).concat(pivot, quickSort(right));
+}
+```
+
+### 5. Binary Search
+**Funksiya:** Massivda binary search usuli bilan element qidirish.
+**Misol:** `binarySearch([1, 2, 3, 4, 5], 3) -> 2`
+```javascript
+function binarySearch(arr, target) {
+  let left = 0;
+  let right = arr.length - 1;
+  while (left <= right) {
+    const mid = Math.floor((left + right) / 2);
+    if (arr[mid] === target) return mid;
+    if (arr[mid] < target) left = mid + 1;
+    else right = mid - 1;
+  }
+  return -1;
+}
+```
+
+### 6. Dijkstra's Algorithm
+**Funksiya:** Berilgan grafikdagi eng qisqa yo'lni topish.
+**Misol:** `dijkstra(graph, start, end)`
+```javascript
+function dijkstra(graph, start) {
+  const distances = {};
+  const visited = new Set();
+  const unvisited = new Set(Object.keys(graph));
+  for (const node of unvisited) distances[node] = Infinity;
+  distances[start] = 0;
+  
+  while (unvisited.size > 0) {
+    const current = Array.from(unvisited).reduce((min, node) => distances[node] < distances[min] ? node : min, Array.from(unvisited)[0]);
+    unvisited.delete(current);
+    for (const neighbor in graph[current]) {
+      if (visited.has(neighbor)) continue;
+      const newDistance = distances[current] + graph[current][neighbor];
+      if (newDistance < distances[neighbor]) distances[neighbor] = newDistance;
+    }
+    visited.add(current);
+  }
+  return distances;
+}
+```
+
+### 7. Linked List Implementation
+**Funksiya:** Linked listni yaratish va unga element qo'shish.
+**Misol:** `linkedList.add(3)`
+```javascript
+class ListNode {
+  constructor(value) {
+    this.value = value;
+    this.next = null;
+  }
+}
+
+class LinkedList {
+  constructor() {
+    this.head = null;
+  }
+  
+  add(value) {
+    const newNode = new ListNode(value);
+    if (!this.head) {
+      this.head = newNode;
+      return;
+    }
+    let current = this.head;
+    while (current.next) {
+      current = current.next;
+    }
+    current.next = newNode;
+  }
+}
+```
+
+### 8. Tree Traversal
+**Funksiya:** Binary tree uchun pre-order, in-order va post-order traversal.
+**Misol:** `treeTraversal(tree)`
+```javascript
+class TreeNode {
+  constructor(value) {
+    this.value = value;
+    this.left = null;
+    this.right = null;
+  }
+}
+
+function preOrder(node) {
+  if (!node) return [];
+  return [node.value, ...preOrder(node.left), ...preOrder(node.right)];
+}
+
+function inOrder(node) {
+  if (!node) return [];
+  return [...inOrder(node.left), node.value, ...inOrder(node.right)];
+}
+
+function postOrder(node) {
+  if (!node) return [];
+  return [...postOrder(node.left), ...postOrder(node.right), node.value];
+}
+```
+
+### 9. LRU Cache Implementation
+**Funksiya:** Least Recently Used (LRU) cache.
+**Misol:** `lruCache.get(key)`, `lruCache.put(key, value)`
+```javascript
+class LRUCache {
+  constructor(limit) {
+    this.cache = new Map();
+    this.limit = limit;
+  }
+  
+  get(key) {
+    if (!this.cache.has(key)) return -1;
+    const value = this.cache.get(key);
+    this.cache.delete(key);
+    this.cache.set(key, value);
+    return value;
+  }
+  
+  put(key, value) {
+    if (this.cache.has(key)) {
+      this.cache.delete(key);
+    } else if (this.cache.size >= this.limit) {
+      this.cache.delete(this.cache.keys().next().value);
+    }
+    this.cache.set(key, value);
+  }
+}
+```
+
+### 10. JSON Deep Copy
+**Funksiya:** Ob'ektning chuqur nusxasini yaratish.
+**Misol:** `deepCopy({ a: 1, b: { c: 2 } }) -> { a: 1, b: { c: 2 } }`
+```javascript
+function deepCopy(obj) {
+  return JSON.parse(JSON.stringify(obj));
+}
+```
+
+### 11. Validate Email
+**Funksiya:** Email manzilni validatsiya qilish.
+**Misol:** `validateEmail('test@example.com') -> true`
+```javascript
+function validateEmail(email) {
+  const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return re.test(email);
+}
+```
+
+
+
 Yuqoridagi misollar uchun siz Jest yordamida unit testlarni yozishingiz mumkin. Har bir funksiya uchun test faylini yarating va funksiyaning kutilgan natijalarini tekshiring. Misol uchun, `sum` funksiyasining testini quyidagicha yozishingiz mumkin:
 
 ### Test Misoli
@@ -201,4 +419,9 @@ test('adds 2 + 3 to equal 5', () => {
 });
 ```
 
+
+
+
+
 Barcha masalalar uchun testlarni yozish va ishlatish orqali unit testlar amaliyotini o'rganishingiz mumkin. Agar qo'shimcha savollar bo'lsa yoki biror narsa tushunarsiz bo'lsa, bemalol so'rang!
+
