@@ -1,1 +1,16 @@
-[Common MIME TYPE ](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types)
+Packages
+
+
+
+```
+npm init
+
+npm add -D vitest
+```
+
+```
+pnpm init
+
+pnpm add -D vitest
+
+```
