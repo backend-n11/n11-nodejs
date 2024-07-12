@@ -1,4 +1,3 @@
-Albatta, unit testlar uchun 20 yaqin masala yaratib beraman. Bu masalalar turli funksiyalar va metodlar uchun yozilgan bo'lib, sizga amaliyot uchun yaxshi manba bo'ladi. Har bir masala uchun test yozish talab qilinadi.
 
 ### 1. Sum Function
 **Funksiya:** Ikki sonni qo'shish.
