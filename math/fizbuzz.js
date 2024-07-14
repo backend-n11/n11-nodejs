@@ -6,11 +6,8 @@ export let fizzBuzz = function (a) {
   } else if (a % 5 === 0) {
     return "Buzz";
   }
-  return a
+  return a;
 };
 
-
-
-console.log(
-  fizzBuzz(7, 1)
-)
+console.log(fizzBuzz(7, 1));
+// TODO:
