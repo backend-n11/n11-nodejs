@@ -21,9 +21,9 @@ export class UserService {
       firstName: "ali",
       lastName: "Muhammad",
       age: 13,
-      email: "ali@test.com",
+      email: "ali@gmail.com",
       gender: "male",
-      password: "qwer1234",
+      password: " ",
     }
 
     const newUser = this.userRoposityory.create(user)
