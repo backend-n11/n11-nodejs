@@ -1,0 +1,29 @@
+import { Column, Entity, PrimaryGeneratedColumn } from "typeorm"
+
+@Entity()
+export class User {
+  @PrimaryGeneratedColumn()
+  id: number
+
+  @Column()
+  firstName: string
+
+  @Column()
+  lastName: string
+
+  @Column({
+    unique: true
+  })
+  email: string
+
+  @Column()
+  password: string
+
+  @Column({
+    enum: ["male", "female"],
+  })
+  gender: "male" | "female"
+
+  @Column()
+  age: number
+}
