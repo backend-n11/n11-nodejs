@@ -1,79 +1,109 @@
-# Loyihaning Texnik Tavsifi (PRD)
+### 1. DrawSQL yordamida Database diagrammasini tuzish
 
-### Loyihaning Maqsadi
+DrawSQL diagrammasini bu yerda matn orqali ko'rsata olmayman, lekin quyidagi ma'lumotlar asosida diagramma tuzishingiz mumkin:
 
-Ushbu loyiha NestJS yordamida REST API serverini yaratish va boshqarishdan iborat. Loyihada foydalanuvchi autentifikatsiyasi, fayllar boshqaruvi, kurslar boshqaruvi va foydalanuvchi kurslari boshqaruvi funksiyalari amalga oshiriladi.
+- `users`:
+  - `_id`: ObjectId (Primary Key)
+  - `username`: String
+  - `email`: String
+  - `password`: String
+  - `role`: String (enum: ['ADMIN', 'USER'])
+  - `isVerified`: Boolean
+  - `createdAt`: Date
+  - `updatedAt`: Date
 
-### Texnologiyalar
+- `services`:
+  - `_id`: ObjectId (Primary Key)
+  - `name`: String
+  - `description`: String
+  - `price`: Number
+  - `createdAt`: Date
+  - `updatedAt`: Date
 
-- NodeJS (v20)
-- NestJS
-- PostgreSQL
-- TypeORM
+- `orders`:
+  - `_id`: ObjectId (Primary Key)
+  - `userId`: ObjectId (Foreign Key to `users`)
+  - `serviceId`: ObjectId (Foreign Key to `services`)
+  - `status`: String (enum: ['PENDING', 'COMPLETED', 'CANCELLED'])
+  - `createdAt`: Date
+  - `updatedAt`: Date
 
-### Asosiy Talablar
+### 2. CRUD yozish
 
-1. **NestJS** yordamida REST API serverini yaratish.
-2. **Bearer token** bilan autentifikatsiya.
-4. **PostgreSQL** ma'lumotlar bazasini ulash va undan foydalanish.
-5. **Tokenning** amal qilish muddati - 10 daqiqa.
+Har bir ma'lumot uchun CRUD (Create, Read, Update, Delete) operatsiyalarini yozish kerak.
 
-### API Endpointlar
+#### `users` uchun CRUD:
 
-### AUTENTIFIKATSIYA
+- Create: Foydalanuvchini ro'yxatdan o'tkazish (signup)
+- Read: Foydalanuvchilar ro'yxatini olish, alohida foydalanuvchini olish
+- Update: Foydalanuvchi ma'lumotlarini yangilash
+- Delete: Foydalanuvchini o'chirish
 
-- **/signup [POST]** - Yangi foydalanuvchini ro'yxatdan o'tkazish (login, parol).
-- **/signin [POST]** - Foydalanuvchini tizimga kiritish (accessToken qaytaradi).
-- **/getMe [GET]** - Foydalanuvchi ma'lumotlarini qaytarish (Bearer token orqali).
-- **/logout [GET]** - Foydalanuvchini tizimdan chiqarish, tokenni bekor qilish.
+#### `services` uchun CRUD:
 
-### FAYLLAR
+- Create: Xizmat qo'shish
+- Read: Xizmatlar ro'yxatini olish, alohida xizmatni olish
+- Update: Xizmat ma'lumotlarini yangilash
+- Delete: Xizmatni o'chirish
 
-- **/file/upload [POST]** - Foydalanuvchi uchun fayl yuklash (auth token kerak).
-- **/file/list [GET]** - Barcha fayllar ro'yxatini olish, paginatsiya qo'llaniladi (auth token kerak).
-- **/file/:id [DELETE]** - Faylni o'chirish (auth token kerak).
-- **/file/:id [GET]** - Fayl ma'lumotlarini olish (auth token kerak).
-- **/file/download/:id [GET]** - Faylni yuklab olish (auth token kerak).
-- **/file/:id [PUT]** - Fayl ma'lumotlarini yangilash (auth token kerak).
+#### `orders` uchun CRUD:
 
-### KURS FAYLLARI
+- Create: Buyurtma qo'shish
+- Read: Buyurtmalar ro'yxatini olish, alohida buyurtmani olish
+- Update: Buyurtma ma'lumotlarini yangilash
+- Delete: Buyurtmani o'chirish
 
-- **/set-course-file [POST]** - Kurs uchun fayl tayinlash (auth token kerak).
-- **/file/:course [GET]** - Kurs faylini olish (auth token kerak).
-- **/file/:id/course/:courseId [DELETE]** - Kurs faylini o'chirish (auth token kerak).
+### 3. VALIDATION yozish
 
-### KURSLAR
+DTO (Data Transfer Object) va Class-validator yordamida validatsiya yozish kerak.
 
-- **/course [POST]** - Foydalanuvchi uchun yangi kurs qo'shish (auth token kerak).
-- **/course/all [GET]** - Barcha kurslarni olish, paginatsiya qo'llaniladi (auth token kerak).
-- **/course/:id [PUT]** - Kurs ma'lumotlarini yangilash (auth token kerak).
-- **/course/:id [GET]** - Kurs ma'lumotlarini olish (auth token kerak).
-- **/course/:id [DELETE]** - Kursni o'chirish (auth token kerak).
+Misol uchun, foydalanuvchi ro'yxatdan o'tishi uchun `CreateUserDto` ni yaratamiz:
 
-### FOYDALANUVCHI KURSLARI
 
-- **/set-user-course [POST]** - Foydalanuvchi uchun kurs tayinlash (auth token kerak).
-- **/course/:userId [GET]** - Foydalanuvchining kurslarini olish (auth token kerak).
-- **/course/:id/user/:userId [DELETE]** - Foydalanuvchi kursini o'chirish (auth token kerak).
+### 4. AUTH yozish
 
-### Ma'lumotlar Bazasining Strukturası
+NestJS-da JWT yordamida autentifikatsiya yozish.
 
-1. **Foydalanuvchilar** (Users) - login, parol va boshqa foydalanuvchi ma'lumotlari.
-2. **Fayllar** (Files) - fayl ma'lumotlari, egasi (foydalanuvchi) bilan bog'liq.
-3. **Kurslar** (Courses) - kurs ma'lumotlari va bog'liq foydalanuvchilar.
-4. **Kurs Fayllari** (Course Files) - kursga bog'liq fayllar.
-5. **Foydalanuvchi Kurslari** (User Courses) - foydalanuvchilarga bog'liq kurslar.
+#### Modullar:
 
-### Xavfsizlik va Kirish Huquqlari
+- AuthModule
+- UsersModule
 
-- Barcha autentifikatsiya va ma'lumot olish funktsiyalari **Bearer token** orqali amalga oshiriladi.
-- Tokenning amal qilish muddati 10 daqiqa bo'lib, foydalanuvchi seanslari boshqariladi va tekshiriladi.
-- Har bir endpoint uchun kerakli kirish huquqlari ko'rsatiladi (faqat ro'yxatdan o'tgan va tizimga kirgan foydalanuvchilar uchun).
+#### Servislar:
 
-### Qo'shimcha Talablar
+- AuthService
+- UsersService
 
-- Paginatsiya barcha ro'yxatlarni olish funktsiyalarida qo'llanilishi kerak.
-- Fayllarni yuklash va yuklab olishda xavfsizlik choralari ko'rilishi kerak.
-- Kurs va foydalanuvchi kurslarini boshqarish uchun mos endpointlar yaratish.
+#### Kontrollerlar:
 
-Ushbu PRD NestJS loyihasini yaratish va boshqarish uchun asosiy talablarni qamrab oladi. Har bir endpoint va funksiyaning aniq tavsifi loyihaning muvaffaqiyatli amalga oshirilishini ta'minlaydi.
+- AuthController
+- UsersController
+
+#### Interseptorlar:
+
+- JwtInterceptor
+
+### 5. EMAIL orqali tasdiqlash
+
+Foydalanuvchi ro'yxatdan o'tganda tasdiqlash emaili yuborish uchun `nodemailer` dan foydalanish.
+
+
+### 6. ACCESS va REFRESH token, COOKIE
+
+JWT yordamida access va refresh tokenlar yaratish.
+
+#### Tokenlar yaratish:
+
+
+
+#### Cookie o'rnatish:
+
+
+### 7. GUARD yozish
+
+JWT guard yaratish va himoyalangan marshrutlarga qo'shish.
+
+
+### Natija
+
+Ushbu qadamlar asosida "Tozalash xizmati" backend qismini NestJS va MongoDB yordamida yaratishingiz mumkin. 
