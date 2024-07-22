@@ -1,38 +1,20 @@
 import { Injectable } from '@nestjs/common';
-import { InjectRepository } from "@nestjs/typeorm";
-import { Repository } from "typeorm";
+import { InjectModel } from "@nestjs/mongoose";
+import { Model } from "mongoose";
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from "./entities/user.entity";
 
 @Injectable()
 export class UserService {
-  constructor(
-    @InjectRepository(User)
-    private readonly userRoposityory: Repository<User>
-
-  ) { }
-  create(createUserDto: CreateUserDto) {
-    return 'This action adds a new user';
+  constructor(@InjectModel(User.name) private UserModel: Model<User>) { }
+  async create(createUserDto: CreateUserDto): Promise<User> {
+    const user = new this.UserModel(createUserDto)
+    return user.save()
   }
 
-  async findAll(): Promise<User> {
-    const user: Omit<User, 'id'> = {
-      firstName: "ali",
-      lastName: "Muhammad",
-      age: 13,
-      email: "ali@gmail.com",
-      gender: "male",
-      password: " ",
-    }
-
-    const newUser = this.userRoposityory.create(user)
-
-    await this.userRoposityory.save(newUser)
-
-
-    return newUser
-
+  findAll() {
+    return `This action returns all user`;
   }
 
   findOne(id: number) {
