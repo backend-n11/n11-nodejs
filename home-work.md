@@ -47,61 +47,70 @@ Har bir ma'lumot uchun CRUD (Create, Read, Update, Delete) operatsiyalarini yozi
 - Delete: Xizmatni o'chirish
 
 #### `orders` uchun CRUD:
-
 - Create: Buyurtma qo'shish
 - Read: Buyurtmalar ro'yxatini olish, alohida buyurtmani olish
 - Update: Buyurtma ma'lumotlarini yangilash
 - Delete: Buyurtmani o'chirish
 
 ### 3. VALIDATION yozish
-
 DTO (Data Transfer Object) va Class-validator yordamida validatsiya yozish kerak.
 
-Misol uchun, foydalanuvchi ro'yxatdan o'tishi uchun `CreateUserDto` ni yaratamiz:
 
 
 ### 4. AUTH yozish
-
 NestJS-da JWT yordamida autentifikatsiya yozish.
 
 #### Modullar:
-
 - AuthModule
 - UsersModule
 
 #### Servislar:
-
 - AuthService
 - UsersService
 
 #### Kontrollerlar:
-
 - AuthController
 - UsersController
 
 #### Interseptorlar:
-
 - JwtInterceptor
 
 ### 5. EMAIL orqali tasdiqlash
-
 Foydalanuvchi ro'yxatdan o'tganda tasdiqlash emaili yuborish uchun `nodemailer` dan foydalanish.
 
 
 ### 6. ACCESS va REFRESH token, COOKIE
-
 JWT yordamida access va refresh tokenlar yaratish.
 
-#### Tokenlar yaratish:
-
-
-
-#### Cookie o'rnatish:
-
-
 ### 7. GUARD yozish
-
 JWT guard yaratish va himoyalangan marshrutlarga qo'shish.
+
+### 8. Tokenlar
+Access va refresh tokenlar yaratish, cookie orqali saqlash.
+
+### 10. Role-Based Access Control (RBAC)
+Har bir foydalanuvchi roliga mos ravishda huquqlarni boshqarish.
+
+### 12. Muloqot
+Foydalanuvchilar orasida real-time chat imkoniyatini qo'shish.
+
+### 13. Qo'shimcha xavfsizlik choralari
+- Two-factor authentication (2FA)
+- Password reset funksiyasi
+
+### 14. Statistik ma'lumotlar
+Adminlar uchun xizmatlar va buyurtmalar haqida statistik ma'lumotlar ko'rsatish.
+
+#### Statistik ma'lumotlar talablari:
+- Jami foydalanuvchilar soni
+- Jami xizmatlar soni
+- Jami buyurtmalar soni
+- Buyurtmalar holati bo'yicha soni
+
+#### API Endpoints:
+- `GET /admin/statistics` - Barcha statistik ma'lumotlarni olish
+
+### 15 health check endpoint ochish
 
 
 ### Natija
