@@ -4,6 +4,8 @@ import { ThrottlerGuard, ThrottlerModule } from "@nestjs/throttler";
 import { AppController } from './app.controller';
 import { PrismaService } from './prisma/prisma.service';
 import { UserModule } from './user/user.module';
+import { PostModule } from './post/post.module';
+import { CommnetModule } from './commnet/commnet.module';
 
 @Module({
   imports: [
@@ -11,7 +13,9 @@ import { UserModule } from './user/user.module';
       ttl: 60000,
       limit: 2,
     }]),
-    UserModule
+    UserModule,
+    PostModule,
+    CommnetModule
   ],
   controllers: [AppController],
   providers: [
