@@ -110,7 +110,19 @@ Adminlar uchun xizmatlar va buyurtmalar haqida statistik ma'lumotlar ko'rsatish.
 #### API Endpoints:
 - `GET /admin/statistics` - Barcha statistik ma'lumotlarni olish
 
+
+
 ### 15 health check endpoint ochish
+
+### 16 pagination
+
+### 17 filter
+
+### 18 sorting
+
+### 19 query base search
+
+### 20 rate limit
 
 
 ### Natija
