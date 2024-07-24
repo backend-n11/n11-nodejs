@@ -1,130 +1,118 @@
-### 1. DrawSQL yordamida Database diagrammasini tuzish
+# Mahsulot Talablar Hujjati (PRD)
 
-DrawSQL diagrammasini bu yerda matn orqali ko'rsata olmayman, lekin quyidagi ma'lumotlar asosida diagramma tuzishingiz mumkin:
+## Loyihaning Umumiy Ko'rinishi
+**Loyiha nomi:** RentCar Dasturi  
+**Texnologiyalar:** NestJS, Prisma, Multer, PostgreSQL, Rate limiting  
+**Maqsad:** Masshtablanuvchi va samarali avtomobil ijarasi ilovasini ishlab chiqish.
 
-- `users`:
-  - `_id`: ObjectId (Primary Key)
-  - `username`: String
-  - `email`: String
-  - `password`: String
-  - `role`: String (enum: ['ADMIN', 'USER'])
-  - `isVerified`: Boolean
-  - `createdAt`: Date
-  - `updatedAt`: Date
+## Ma'lumotlar Bazasi
+### Jadval va Ustunlar
+1. **File**
+   - `id`: UUID
+   - `url`: string
+   - `mimetype`: string
+   - `size`: number
+   - `car_id`: UUID (chet kalit `car.id` ga)
+   - `created_at`: timestamp
+   - `last_edited_at`: timestamp
 
-- `services`:
-  - `_id`: ObjectId (Primary Key)
-  - `name`: String
-  - `description`: String
-  - `price`: Number
-  - `createdAt`: Date
-  - `updatedAt`: Date
+2. **User**
+   - `id`: UUID
+   - `phone`: string
+   - `full_name`: string
+   - `avatar`: string
+   - `role`: enum (`client`, `owner`, `supervisor`, `admin`)
+   - `created_at`: timestamp
+   - `last_edited_at`: timestamp
 
-- `orders`:
-  - `_id`: ObjectId (Primary Key)
-  - `userId`: ObjectId (Foreign Key to `users`)
-  - `serviceId`: ObjectId (Foreign Key to `services`)
-  - `status`: String (enum: ['PENDING', 'COMPLETED', 'CANCELLED'])
-  - `createdAt`: Date
-  - `updatedAt`: Date
+3. **Company**
+   - `id`: UUID
+   - `name`: string
+   - `owner`: UUID (chet kalit `user.id` ga)
+   - `logo`: string
+   - `created_at`: timestamp
+   - `last_edited_at`: timestamp
 
-### 2. CRUD yozish
+4. **Model**
+   - `id`: UUID
+   - `name`: string
+   - `company_id`: UUID (chet kalit `company.id` ga)
+   - `created_at`: timestamp
+   - `last_edited_at`: timestamp
 
-Har bir ma'lumot uchun CRUD (Create, Read, Update, Delete) operatsiyalarini yozish kerak.
+5. **Car**
+   - `id`: UUID
+   - `name`: string
+   - `model_id`: UUID (chet kalit `model.id` ga)
+   - `company_id`: UUID (chet kalit `company.id` ga)
+   - `info`: text
+   - `created_at`: timestamp
+   - `last_edited_at`: timestamp
 
-#### `users` uchun CRUD:
+6. **Transaction**
+   - `id`: UUID
+   - `company_id`: UUID (chet kalit `company.id` ga)
+   - `user_id`: UUID (chet kalit `user.id` ga)
+   - `user_data`: JSON
+   - `car_id`: UUID (chet kalit `car.id` ga)
+   - `car_data`: JSON
+   - `price`: number
+   - `start_date`: timestamp
+   - `end_date`: timestamp
+   - `status`: enum (`debit`, `credit`)
+   - `created_at`: timestamp
+   - `last_edited_at`: timestamp
+   - `created_by`: UUID (chet kalit `user.id` ga)
+   - `last_edited_by`: UUID (chet kalit `user.id` ga)
 
-- Create: Foydalanuvchini ro'yxatdan o'tkazish (signup)
-- Read: Foydalanuvchilar ro'yxatini olish, alohida foydalanuvchini olish
-- Update: Foydalanuvchi ma'lumotlarini yangilash
-- Delete: Foydalanuvchini o'chirish
+## Modullar va Ruxsatlar
+### File
+- **CRUD Amallar:** CRUD amallar talab qilinmaydi
 
-#### `services` uchun CRUD:
+### Company
+- **Yaratish:** Faqat `admin`
+- **Yangilash:** `admin`, `owner`
+- **O'chirish:** Faqat `admin`
+- **Barchasini olish:** Ochiq
+- **ID bo'yicha olish:** Ochiq
 
-- Create: Xizmat qo'shish
-- Read: Xizmatlar ro'yxatini olish, alohida xizmatni olish
-- Update: Xizmat ma'lumotlarini yangilash
-- Delete: Xizmatni o'chirish
+### User
+- **Ro'yxatdan o'tish (client):** Ochiq
+- **Ro'yxatdan o'tish (adminlarsiz):** `admin`, `owner`
+- **Kirish:** Ochiq
+- **Barchasini olish:** `owner`, `supervisor`, `admin`
+- **ID bo'yicha olish:** Ochiq
 
-#### `orders` uchun CRUD:
-- Create: Buyurtma qo'shish
-- Read: Buyurtmalar ro'yxatini olish, alohida buyurtmani olish
-- Update: Buyurtma ma'lumotlarini yangilash
-- Delete: Buyurtmani o'chirish
+### Model
+- **Yaratish:** `admin`, `owner`
+- **Yangilash:** `admin`, `owner`
+- **O'chirish:** `admin`, `owner`
+- **Company ID bo'yicha olish:** Ochiq
+- **ID bo'yicha olish:** Ochiq
 
-### 3. VALIDATION yozish
-DTO (Data Transfer Object) va Class-validator yordamida validatsiya yozish kerak.
+### Car
+- **Yaratish:** `admin`, `owner`
+- **Yangilash:** `admin`, `owner`
+- **O'chirish:** `admin`, `owner`
+- **Company ID bo'yicha olish:** Ochiq
+- **ID bo'yicha olish:** Ochiq
 
-
-
-### 4. AUTH yozish
-NestJS-da JWT yordamida autentifikatsiya yozish.
-
-#### Modullar:
-- AuthModule
-- UsersModule
-
-#### Servislar:
-- AuthService
-- UsersService
-
-#### Kontrollerlar:
-- AuthController
-- UsersController
-
-#### Interseptorlar:
-- JwtInterceptor
-
-### 5. EMAIL orqali tasdiqlash
-Foydalanuvchi ro'yxatdan o'tganda tasdiqlash emaili yuborish uchun `nodemailer` dan foydalanish.
-
-
-### 6. ACCESS va REFRESH token, COOKIE
-JWT yordamida access va refresh tokenlar yaratish.
-
-### 7. GUARD yozish
-JWT guard yaratish va himoyalangan marshrutlarga qo'shish.
-
-### 8. Tokenlar
-Access va refresh tokenlar yaratish, cookie orqali saqlash.
-
-### 10. Role-Based Access Control (RBAC)
-Har bir foydalanuvchi roliga mos ravishda huquqlarni boshqarish.
-
-### 12. Muloqot
-Foydalanuvchilar orasida real-time chat imkoniyatini qo'shish.
-
-### 13. Qo'shimcha xavfsizlik choralari
-- Two-factor authentication (2FA)
-- Password reset funksiyasi
-
-### 14. Statistik ma'lumotlar
-Adminlar uchun xizmatlar va buyurtmalar haqida statistik ma'lumotlar ko'rsatish.
-
-#### Statistik ma'lumotlar talablari:
-- Jami foydalanuvchilar soni
-- Jami xizmatlar soni
-- Jami buyurtmalar soni
-- Buyurtmalar holati bo'yicha soni
-
-#### API Endpoints:
-- `GET /admin/statistics` - Barcha statistik ma'lumotlarni olish
+### Transaction
+- **Yaratish:** `client`, `owner`, `supervisor`, `admin`
+- **Yangilash:** `admin`, `owner`, `supervisor`
+- **O'chirish:** `admin`, `owner`
+- **ID bo'yicha olish:** `admin`, `owner`, `supervisor`
+- **Barchasini olish:** `admin`, `owner`, `supervisor` (filtrlash: vaqt oralig'i, companyId, userId, carId, status)
+- **Mening Transactionlarimni olish:** `client`, `owner`, `supervisor`, `admin` (filtrlash: vaqt oralig'i, companyId, status)
 
 
+## Qo'shimcha Talablar
+- **Rate Limiting:** Suiste'mollikni oldini olish uchun rate limiting ni amalga oshirish.
+- **Fayl Boshqaruvi:** Fayllarni yuklash uchun Multer dan foydalanish.
+- **Ma'lumotlar Bazasi Boshqaruvi:** Prisma dan ma'lumotlar bazasi boshqaruvi va migratsiyalar uchun foydalanish.
+- **API Hujjatlari:** Swagger yordamida API hujjatlarini taqdim etish.
+- **Autentifikatsiya:** JWT yoki OAuth yordamida autentifikatsiya amalga oshirish.
+- **Xatolik Boshqaruvi:** NestJS filtrlaridan foydalanib markazlashgan xatolik boshqaruvi.
 
-### 15 health check endpoint ochish
-
-### 16 pagination
-
-### 17 filter
-
-### 18 sorting
-
-### 19 query base search
-
-### 20 rate limit
-
-
-### Natija
-
-Ushbu qadamlar asosida "Tozalash xizmati" backend qismini NestJS va MongoDB yordamida yaratishingiz mumkin. 
+## Xulosa
+Ushbu hujjat RentCar dasturining talablarini o'z ichiga oladi, ma'lumotlar bazasi sxemasi, modul ruxsatlari, baholash mezonlari va qo'shimcha talablarni batafsil yoritadi. Ushbu spetsifikatsiyalarni amalga oshirish mustahkam, masshtablanuvchi va samarali avtomobil ijarasi xizmatini ta'minlaydi.
