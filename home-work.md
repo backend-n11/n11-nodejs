@@ -105,14 +105,25 @@
 - **Barchasini olish:** `admin`, `owner`, `supervisor` (filtrlash: vaqt oralig'i, companyId, userId, carId, status)
 - **Mening Transactionlarimni olish:** `client`, `owner`, `supervisor`, `admin` (filtrlash: vaqt oralig'i, companyId, status)
 
-
 ## Qo'shimcha Talablar
 - **Rate Limiting:** Suiste'mollikni oldini olish uchun rate limiting ni amalga oshirish.
 - **Fayl Boshqaruvi:** Fayllarni yuklash uchun Multer dan foydalanish.
 - **Ma'lumotlar Bazasi Boshqaruvi:** Prisma dan ma'lumotlar bazasi boshqaruvi va migratsiyalar uchun foydalanish.
-- **API Hujjatlari:** Swagger yordamida API hujjatlarini taqdim etish.
 - **Autentifikatsiya:** JWT yoki OAuth yordamida autentifikatsiya amalga oshirish.
 - **Xatolik Boshqaruvi:** NestJS filtrlaridan foydalanib markazlashgan xatolik boshqaruvi.
 
+## Public Dekoratoris
+Public API'lar uchun `@Public` dekoratori qo'llanilishi kerak, bu autentifikatsiya talab qilinmaydigan endpointlarni belgilash uchun ishlatiladi.
+
+## PassportJS Bilan Integratsiya
+**Autentifikatsiya strategiyalari:** 
+- **JWT:** Sessiyalarni boshqarish uchun.
+
+### Implementatsiya Talablari
+1. **JWT Strategy:**
+   - Har bir so'rov uchun foydalanuvchini tekshiradi.
+   - JWT tokenni tekshiradi va foydalanuvchi ma'lumotlarini olish imkonini beradi.
+   
+   
 ## Xulosa
-Ushbu hujjat RentCar dasturining talablarini o'z ichiga oladi, ma'lumotlar bazasi sxemasi, modul ruxsatlari, baholash mezonlari va qo'shimcha talablarni batafsil yoritadi. Ushbu spetsifikatsiyalarni amalga oshirish mustahkam, masshtablanuvchi va samarali avtomobil ijarasi xizmatini ta'minlaydi.
+Ushbu hujjat RentCar dasturining talablarini o'z ichiga oladi, ma'lumotlar bazasi sxemasi, modul ruxsatlari, baholash mezonlari va qo'shimcha talablarni batafsil yoritadi. Public dekoratori va PassportJS bilan integratsiya talablari qo'shildi. Ushbu spetsifikatsiyalarni amalga oshirish mustahkam, masshtablanuvchi va samarali avtomobil ijarasi xizmatini ta'minlaydi.

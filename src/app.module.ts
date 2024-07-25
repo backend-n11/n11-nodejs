@@ -1,9 +1,10 @@
 import { Module } from "@nestjs/common";
-import { APP_GUARD } from "@nestjs/core";
+import { APP_GUARD, APP_GUARD } from "@nestjs/core";
 import { JwtModule } from "@nestjs/jwt";
 import { ThrottlerGuard, ThrottlerModule } from "@nestjs/throttler";
 import { AppController } from './app.controller';
 import { AuthModule } from './auth/auth.module';
+import { JwtAuthGuard } from "./auth/guard/jwt-auth.guard";
 import { CommnetModule } from './commnet/commnet.module';
 import { PostModule } from './post/post.module';
 import { PrismaService } from './prisma/prisma.service';
@@ -31,6 +32,10 @@ import { UserModule } from './user/user.module';
     {
       provide: APP_GUARD,
       useClass: ThrottlerGuard
+    },
+    {
+      provide: APP_GUARD,
+      useClass: JwtAuthGuard
     },
     PrismaService
 
