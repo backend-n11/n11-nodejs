@@ -1,7 +1,6 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, Query } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
 import { SkipThrottle } from "@nestjs/throttler";
-import { Prisma } from "@prisma/client";
-import { UpdateUserDto } from './dto/update-user.dto';
+import { SignUpAuthDto } from "src/auth/dto";
 import { UserService } from './user.service';
 
 @Controller('user')
@@ -9,13 +8,8 @@ export class UserController {
   constructor(private readonly userService: UserService) { }
 
   @Post()
-  create(@Body() createUserDto: Prisma.UserCreateInput) {
-    return this.userService.create(createUserDto);
-  }
-
-  @Post('many')
-  createMany(@Body() createUsersDto: Prisma.UserCreateInput[]) {
-    return this.userService.createMany(createUsersDto);
+  create(@Body() signUpDto: SignUpAuthDto) {
+    return this.userService.create(signUpDto);
   }
 
   @SkipThrottle()
@@ -27,15 +21,5 @@ export class UserController {
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.userService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    return this.userService.update(+id, updateUserDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.userService.remove(+id);
   }
 }

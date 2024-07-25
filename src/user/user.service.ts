@@ -1,53 +1,35 @@
 import { Injectable } from '@nestjs/common';
-import { Prisma, User } from '@prisma/client';
-import { PrismaService } from "src/prisma/prisma.service";
-import { UpdateUserDto } from "./dto/update-user.dto";
+import { User } from '@prisma/client';
+import { SignUpAuthDto } from "src/auth/dto";
+import { UserRepository } from "./repository/user.repository";
+
 
 
 @Injectable()
 export class UserService {
-  constructor(private readonly prisma: PrismaService) { }
+  constructor(
+    private readonly userRepository: UserRepository,
+  ) { }
 
-  async create(createUserDto: Prisma.UserCreateInput): Promise<User> {
-    const user = await this.prisma.user.create({
-      data: createUserDto
-    })
+  async create(signUpDto: SignUpAuthDto): Promise<Omit<User, 'password'>> {
+    const user = this.userRepository.create(signUpDto)
 
     return user
   }
 
 
-  async createMany(createUsersDto: Prisma.UserCreateInput[]): Promise<Prisma.BatchPayload> {
-    const users = await this.prisma.user.createMany({
-      data: createUsersDto
-    })
-
-    return users
-  }
-
-
   async findAll(take: string, skip: string): Promise<User[]> {
-
-
-
-    const query = {
-      skip: (+skip - 1) * +take,
-      take: +take
-    }
-
-    console.log(query)
-    return this.prisma.user.findMany(query)
+    return this.userRepository.findAll(take, skip)
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} user`;
+    return this.userRepository.findOne(id)
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+
+  findByEmail(email: string) {
+    return this.userRepository.findByEmail(email)
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} user`;
-  }
+
 }
