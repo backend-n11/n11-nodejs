@@ -1,8 +1,10 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
+import { ApiTags } from "@nestjs/swagger";
 import { Prisma } from "@prisma/client";
 import { UpdatePostDto } from './dto/update-post.dto';
 import { PostService } from './post.service';
 
+@ApiTags('Post')
 @Controller('post')
 export class PostController {
   constructor(private readonly postService: PostService) { }

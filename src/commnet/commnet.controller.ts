@@ -1,8 +1,10 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
+import { ApiTags } from "@nestjs/swagger";
 import { Prisma } from "@prisma/client";
 import { CommnetService } from './commnet.service';
 import { UpdateCommnetDto } from './dto/update-commnet.dto';
 
+@ApiTags('commnet')
 @Controller('commnet')
 export class CommnetController {
   constructor(private readonly commnetService: CommnetService) { }
